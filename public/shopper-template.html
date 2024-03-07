@@ -8,35 +8,54 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <style>
-        header{
+        header {
             display: flex;
             justify-content: space-around;
             padding: 20px;
             font-size: 20px;
             font-family: Arial;
         }
-        nav span{
+        nav span {
             margin-right: 20px;
         }
-        .shortcut-icons span{
-            margin-left: 10px;
-        }
-        .shortcut-icons{
+        .shortcut-icons span {
             margin-right: 10px;
         }
-        .brand-title{
+        .brand-title {
             font-size: 30px;
             font-weight: bold;
         }
-        article{
+        article {
             background-color: black;
-            color: white;
+            color:white;
             padding: 10px;
             text-align: center;
             font-family: Arial;
         }
-        .bi-lightning-fill{
-            color: gold;
+        .bi-lightning-fill {
+            color:gold;
+        }
+        section {
+            height: 400px;
+        }
+        footer {
+            background-color: black;
+            color:white;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 2.4fr 2.4fr 2.4fr 2.4fr 2.4fr;
+            font-family: Arial;
+        }
+        ol {
+            list-style: none;
+        }
+        li {
+            margin-bottom: 20px;
+        }
+        li:first-child {
+            font-weight: bold;
+            font-size: 20px;
+            margin-bottom: 25px;
         }
     </style>
 </head>
@@ -46,7 +65,6 @@
             <span class="brand-title">Shopper.</span>
         </div>
         <div>
-            
             <nav>
                 <span>Home</span>
                 <span>Catalog</span>
@@ -56,17 +74,65 @@
                 <span>Docs</span>
             </nav>
         </div>
-        <dav class="shortcut-icons">
+        <div class="shortcut-icons">
             <span class="bi bi-search"></span>
             <span class="bi bi-person"></span>
             <span class="bi bi-heart"></span>
             <span class="bi bi-cart3"></span>
-        </dav>
+        </div>
     </header>
     <article>
         <span class="bi bi-lightning-fill"></span>
         <span>HAPPY HOLIDAY DEALS ON EVERYTHING</span>
         <span class="bi bi-lightning-fill"></span>
     </article>
+    <section>
+
+    </section>
+    <footer>
+        <div>
+           <div>Shopper.</div>
+           <span class="bi bi-twitter"></span>
+           <span class="bi bi-facebook"></span>
+           <span class="bi bi-instagram"></span>
+           <span class="bi bi-youtube"></span>
+        </div>
+        <div>
+            <ol>
+                <li>SUPPORT</li>
+                <li>Contact Us</li>
+                <li>FAQs</li>
+                <li>Size Guide</li>
+                <li>Shipping & Returns</li>
+            </ol>
+        </div>
+        <div>
+            <ol>
+                <li>SUPPORT</li>
+                <li>Contact Us</li>
+                <li>FAQs</li>
+                <li>Size Guide</li>
+                <li>Shipping & Returns</li>
+            </ol>
+        </div>
+        <div>
+            <ol>
+                <li>SUPPORT</li>
+                <li>Contact Us</li>
+                <li>FAQs</li>
+                <li>Size Guide</li>
+                <li>Shipping & Returns</li>
+            </ol>
+        </div>
+        <div>
+            <ol>
+                <li>SUPPORT</li>
+                <li>Contact Us</li>
+                <li>FAQs</li>
+                <li>Size Guide</li>
+                <li>Shipping & Returns</li>
+            </ol>
+        </div>
+    </footer>
 </body>
 </html>
