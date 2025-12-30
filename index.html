@@ -483,83 +483,156 @@
       color: #0f172a;
       /* readable dark text */
     }
+
     /* ========== SKILLS LAYOUT ========== */
-.skills {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-}
+    .skills {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+    }
 
-/* BASE CHIP */
-.skill-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 12px;
-  border-radius: 999px;
-  font-size: 0.8rem;
-  font-weight: 500;
-  cursor: default;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  color: #e5e7eb;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
+    /* BASE CHIP */
+    .skill-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      cursor: default;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #e5e7eb;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
 
-/* ICON SIZE */
-.skill-chip i {
-  font-size: 1rem;
-}
+    /* ICON SIZE */
+    .skill-chip i {
+      font-size: 1rem;
+    }
 
-/* HOVER */
-.skill-chip:hover {
-  transform: translateY(-3px) scale(1.05);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
-}
+    /* HOVER */
+    .skill-chip:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+    }
 
-/* MOBILE TAP */
-.skill-chip:active {
-  transform: scale(0.95);
-}
+    /* MOBILE TAP */
+    .skill-chip:active {
+      transform: scale(0.95);
+    }
 
-/* LIGHT THEME */
-body.light .skill-chip {
-  background: rgba(0, 0, 0, 0.05);
-  border-color: rgba(0, 0, 0, 0.15);
-  color: #1f2937;
-}
+    /* LIGHT THEME */
+    body.light .skill-chip {
+      background: rgba(0, 0, 0, 0.05);
+      border-color: rgba(0, 0, 0, 0.15);
+      color: #1f2937;
+    }
 
-/* ========== OFFICIAL BRAND COLORS ========== */
+    /* ========== OFFICIAL BRAND COLORS ========== */
 
-/* React */
-.skill-chip.react i { color: #61DAFB; }
+    /* React */
+    .skill-chip.react i {
+      color: #61DAFB;
+    }
 
-/* Next.js */
-.skill-chip.next i { color: #ffffff; }
-body.light .skill-chip.next i { color: #000000; }
+    /* Next.js */
+    .skill-chip.next i {
+      color: #ffffff;
+    }
 
-/* Tailwind */
-.skill-chip.tailwind i { color: #38BDF8; }
+    body.light .skill-chip.next i {
+      color: #000000;
+    }
 
-/* JavaScript */
-.skill-chip.js i { color: #F7DF1E; }
+    /* Tailwind */
+    .skill-chip.tailwind i {
+      color: #38BDF8;
+    }
 
-/* HTML */
-.skill-chip.html i { color: #E34F26; }
+    /* JavaScript */
+    .skill-chip.js i {
+      color: #F7DF1E;
+    }
 
-/* CSS */
-.skill-chip.css i { color: #1572B6; }
+    /* HTML */
+    .skill-chip.html i {
+      color: #E34F26;
+    }
 
-/* Bootstrap */
-.skill-chip.bootstrap i { color: #7952B3; }
+    /* CSS */
+    .skill-chip.css i {
+      color: #1572B6;
+    }
 
-/* Node */
-.skill-chip.node i { color: #339933; }
+    /* Bootstrap */
+    .skill-chip.bootstrap i {
+      color: #7952B3;
+    }
 
-/* MongoDB */
-.skill-chip.mongo i { color: #47A248; }
+    /* Node */
+    .skill-chip.node i {
+      color: #339933;
+    }
 
+    /* MongoDB */
+    .skill-chip.mongo i {
+      color: #47A248;
+    }
+
+    /* ================= MOBILE OPTIMIZATION ================= */
+
+    /* Reduce card padding on small screens */
+    @media (max-width: 768px) {
+      .profile-card {
+        padding: 20px;
+      }
+
+      .name {
+        font-size: 1.6rem;
+      }
+
+      .role {
+        font-size: 0.95rem;
+      }
+
+      .typing {
+        font-size: 0.9rem;
+        height: 20px;
+      }
+    }
+
+    /* Stack project cards nicely on mobile */
+    @media (max-width: 576px) {
+      .row.g-4 {
+        row-gap: 16px;
+      }
+
+      .project-card {
+        padding: 14px;
+      }
+
+      .project-card h6 {
+        font-size: 0.95rem;
+      }
+
+      .project-card p {
+        font-size: 0.8rem;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .skills {
+        gap: 8px;
+      }
+
+      .skill-chip {
+        font-size: 0.75rem;
+        padding: 5px 10px;
+      }
+    }
   </style>
 </head>
 
@@ -589,16 +662,16 @@ body.light .skill-chip.next i { color: #000000; }
 
       <!-- SKILLS -->
       <div class="mt-4 skills">
-  <span class="skill-chip react"><i class="bx bxl-react"></i> React.js</span>
-  <span class="skill-chip next"><i class="bx bxl-nextjs"></i> Next.js</span>
-  <span class="skill-chip tailwind"><i class="bx bxl-tailwind-css"></i> Tailwind CSS</span>
-  <span class="skill-chip js"><i class="bx bxl-javascript"></i> JavaScript</span>
-  <span class="skill-chip html"><i class="bx bxl-html5"></i> HTML</span>
-  <span class="skill-chip css"><i class="bx bxl-css3"></i> CSS</span>
-  <span class="skill-chip bootstrap"><i class="bx bxl-bootstrap"></i> Bootstrap</span>
-  <span class="skill-chip node"><i class="bx bxl-nodejs"></i> Node.js</span>
-  <span class="skill-chip mongo"><i class="bx bxl-mongodb"></i> MongoDB</span>
-</div>
+        <span class="skill-chip react"><i class="bx bxl-react"></i> React.js</span>
+        <span class="skill-chip next"><i class="bx bxl-nextjs"></i> Next.js</span>
+        <span class="skill-chip tailwind"><i class="bx bxl-tailwind-css"></i> Tailwind CSS</span>
+        <span class="skill-chip js"><i class="bx bxl-javascript"></i> JavaScript</span>
+        <span class="skill-chip html"><i class="bx bxl-html5"></i> HTML</span>
+        <span class="skill-chip css"><i class="bx bxl-css3"></i> CSS</span>
+        <span class="skill-chip bootstrap"><i class="bx bxl-bootstrap"></i> Bootstrap</span>
+        <span class="skill-chip node"><i class="bx bxl-nodejs"></i> Node.js</span>
+        <span class="skill-chip mongo"><i class="bx bxl-mongodb"></i> MongoDB</span>
+      </div>
 
     </div>
 
@@ -606,71 +679,72 @@ body.light .skill-chip.next i { color: #000000; }
     <h4 class="mt-5 mb-3 text-center">🚀 Projects</h4>
     <div class="row g-4">
 
-      <div class="col-lg-3 col-md-4 col-sm-6">
+      <div class="col-6 col-sm-6 col-md-4 col-lg-3">
         <div class="project-card">
-          <h6>EMI Calculator</h6>
+          <h6>💰 EMI Calculator</h6>
           <p class="small">Loan EMI calculator</p>
           <a href="public/emi-calculator.html">View Project →</a>
         </div>
       </div>
 
-      <div class="col-lg-3 col-md-4 col-sm-6">
+      <div class="col-6 col-sm-6 col-md-4 col-lg-3">
         <div class="project-card">
-          <h6>FakeStore</h6>
+          <h6>🛒 FakeStore</h6>
           <p class="small">E-commerce UI</p>
           <a href="public/Fakestore.html">View Project →</a>
         </div>
       </div>
 
-      <div class="col-lg-3 col-md-4 col-sm-6">
+      <div class="col-6 col-sm-6 col-md-4 col-lg-3">
         <div class="project-card">
-          <h6>KFC Online</h6>
+          <h6>🍗 KFC Online</h6>
           <p class="small">Food ordering UI</p>
           <a href="public/kfc-online.html">View Project →</a>
         </div>
       </div>
 
-      <div class="col-lg-3 col-md-4 col-sm-6">
+      <div class="col-6 col-sm-6 col-md-4 col-lg-3">
         <div class="project-card">
-          <h6>Netflix UI</h6>
+          <h6>🎬 Netflix UI</h6>
           <p class="small">Netflix clone</p>
           <a href="public/Netflix.html">View Project →</a>
         </div>
       </div>
 
-      <div class="col-lg-3 col-md-4 col-sm-6">
+      <div class="col-6 col-sm-6 col-md-4 col-lg-3">
         <div class="project-card">
-          <h6>YouTube UI</h6>
+          <h6>📺 YouTube UI</h6>
           <p class="small">YouTube clone</p>
           <a href="public/YouTube.html">View Project →</a>
         </div>
       </div>
 
-      <div class="col-lg-3 col-md-4 col-sm-6">
+      <div class="col-6 col-sm-6 col-md-4 col-lg-3">
         <div class="project-card">
-          <h6>Shopper Template</h6>
+          <h6>🛍 Shopper Template</h6>
           <p class="small">E-commerce template</p>
           <a href="public/shopper-template.html">View Project →</a>
         </div>
       </div>
 
-      <div class="col-lg-3 col-md-4 col-sm-6">
+      <div class="col-6 col-sm-6 col-md-4 col-lg-3">
         <div class="project-card">
-          <h6>INOX Movies</h6>
+          <h6>🎟 INOX Movies</h6>
           <p class="small">Movie booking UI</p>
           <a href="public/Inox.html">View Project →</a>
         </div>
       </div>
 
-      <div class="col-lg-3 col-md-4 col-sm-6">
+      <div class="col-6 col-sm-6 col-md-4 col-lg-3">
         <div class="project-card">
-          <h6>Tic Tac Toe</h6>
+          <h6>❌⭕ Tic Tac Toe</h6>
           <p class="small">JS game</p>
           <a href="public/tic-tac-toe.html">View Project →</a>
         </div>
       </div>
 
     </div>
+
 
 
 
