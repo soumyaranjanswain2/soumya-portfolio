@@ -1,637 +1,769 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Soumya Ranjan Swain | Frontend Developer</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Soumya Ranjan Swain | Frontend Developer</title>
 
-<!-- Icons -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css" rel="stylesheet">
-<link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+  <!-- Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
 
-<!-- Bootstrap -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
 
-<style>
-:root{
-  --primary:#38bdf8;
-  --bg-dark:linear-gradient(135deg,#1e293b,#0f172a);
-  --bg-light:linear-gradient(135deg,#f8fafc,#e2e8f0);
-  --card-dark:rgba(255,255,255,.06);
-  --card-light:#ffffff;
-  --text-dark:#ffffff;
-  --text-light:#0f172a;
+  <style>
+    :root {
+      --primary: #38bdf8;
+      --bg-dark: linear-gradient(135deg, #1e293b, #0f172a);
+      --bg-light: linear-gradient(135deg, #f8fafc, #e2e8f0);
+      --card-dark: rgba(255, 255, 255, .06);
+      --card-light: #ffffff;
+      --text-dark: #ffffff;
+      --text-light: #0f172a;
+    }
+
+    /* BODY */
+    body {
+      background: var(--bg-dark);
+      color: var(--text-dark);
+      min-height: 100vh;
+      font-family: "Segoe UI", sans-serif;
+      padding: 20px;
+      transition: .4s;
+    }
+
+    body.light {
+      background: var(--bg-light);
+      color: var(--text-light);
+    }
+
+    /* CARD */
+    .profile-card {
+      background: var(--card-dark);
+      backdrop-filter: blur(12px);
+      border-radius: 18px;
+      padding: 32px;
+      max-width: 1100px;
+      margin: auto;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, .35);
+      position: relative;
+    }
+
+    body.light .profile-card {
+      background: var(--card-light);
+    }
+
+    /* THEME TOGGLE */
+    .theme-toggle {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      border: 1px solid var(--primary);
+      color: var(--primary);
+      background: none;
+      padding: 6px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    /* PROFILE IMAGE */
+    /* PROFILE IMAGE CONTAINER */
+    .profile-img-wrapper {
+      width: 180px;
+      height: 180px;
+      margin: auto;
+      border-radius: 50%;
+      padding: 6px;
+      background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+      box-shadow: 0 10px 30px rgba(56, 189, 248, 0.5);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    /* IMAGE ITSELF */
+    .profile-img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center 20%;
+      /* 👈 FACE FIX (very important) */
+      background: #111;
+      display: block;
+    }
+
+    /* HOVER GLOW */
+    .profile-img-wrapper:hover {
+      transform: scale(1.08);
+      box-shadow:
+        0 15px 40px rgba(56, 189, 248, 0.7),
+        0 0 30px rgba(56, 189, 248, 0.6);
+    }
+
+    /* MOBILE FIX */
+    @media (max-width: 576px) {
+      .profile-img-wrapper {
+        width: 150px;
+        height: 150px;
+      }
+    }
+
+
+    /* TEXT */
+    .name {
+      font-size: 2rem;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .role {
+      color: var(--primary);
+      text-align: center;
+      font-weight: 500;
+    }
+
+    /* TYPING */
+    .typing {
+      font-weight: 500;
+      color: var(--primary);
+      text-align: center;
+      height: 24px;
+    }
+
+    /* SKILLS */
+    .badge-skill {
+      background: rgba(56, 189, 248, .15);
+      border: 1px solid rgba(56, 189, 248, .4);
+      margin: 4px;
+      font-size: medium;
+    }
+
+    /* PROJECT CARD */
+    .project-card {
+      background: rgba(255, 255, 255, .05);
+      border: 1px solid rgba(255, 255, 255, .1);
+      border-radius: 14px;
+      padding: 16px;
+      transition: .3s;
+      height: 100%;
+    }
+
+    .project-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, .4);
+    }
+
+    .project-card h6 {
+      color: var(--primary);
+    }
+
+    .project-card a {
+      color: var(--primary);
+      text-decoration: none;
+      font-size: .9rem;
+    }
+
+    .project-card a:hover {
+      text-decoration: underline;
+    }
+
+    /* SOCIAL */
+    .social a {
+      font-size: 26px;
+      color: var(--primary);
+      margin: 0 10px;
+      cursor: pointer;
+    }
+
+    /* POPUP */
+    .popup-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .6);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+    }
+
+    .popup-card {
+      background: #fff;
+      color: #000;
+      padding: 25px;
+      border-radius: 14px;
+      text-align: center;
+      width: 90%;
+      max-width: 320px;
+    }
+
+    .popup-card h5 {
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    /* SOCIAL BASE */
+    .social-link {
+      font-size: 28px;
+      margin: 0 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* LINKEDIN */
+    .social-link.linkedin {
+      color: #0A66C2;
+    }
+
+    .social-link.linkedin:hover {
+      color: #0A66C2;
+      transform: translateY(-4px) scale(1.15);
+      text-shadow: 0 0 12px rgba(10, 102, 194, 0.8);
+    }
+
+    /* GITHUB */
+    .social-link.github {
+      color: #181717;
+    }
+
+    body:not(.light) .social-link.github {
+      color: #ffffff;
+    }
+
+    .social-link.github:hover {
+      color: #181717;
+      transform: translateY(-4px) scale(1.15);
+      text-shadow: 0 0 12px rgba(24, 23, 23, 0.8);
+    }
+
+    /* GMAIL */
+    .social-link.gmail {
+      color: #EA4335;
+    }
+
+    .social-link.gmail:hover {
+      color: #EA4335;
+      transform: translateY(-4px) scale(1.15);
+      text-shadow: 0 0 12px rgba(234, 67, 53, 0.8);
+    }
+
+    /* SOCIAL CONTAINER */
+    .social {
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+    }
+
+    /* BASE ICON */
+    .social-link {
+      position: relative;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    /* TOOLTIP */
+    .social-link::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: -36px;
+      background: #000;
+      color: #fff;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(6px);
+      transition: 0.3s ease;
+    }
+
+    body.light .social-link::after {
+      background: #111;
+    }
+
+    .social-link:hover::after {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* LINKEDIN */
+    .social-link.linkedin {
+      color: #0A66C2;
+    }
+
+    .social-link.linkedin:hover {
+      background: rgba(10, 102, 194, 0.15);
+      color: #0A66C2;
+      transform: translateY(-4px) scale(1.15);
+      box-shadow: 0 0 16px rgba(10, 102, 194, 0.6);
+    }
+
+    /* GITHUB */
+    .social-link.github {
+      color: #ffffff;
+    }
+
+    body.light .social-link.github {
+      color: #181717;
+    }
+
+    .social-link.github:hover {
+      background: rgba(24, 23, 23, 0.15);
+      color: #181717;
+      transform: translateY(-4px) scale(1.15);
+      box-shadow: 0 0 16px rgba(24, 23, 23, 0.6);
+    }
+
+    /* GMAIL */
+    .social-link.gmail {
+      color: #EA4335;
+    }
+
+    .social-link.gmail:hover {
+      background: rgba(234, 67, 53, 0.15);
+      color: #EA4335;
+      transform: translateY(-4px) scale(1.15);
+      box-shadow: 0 0 16px rgba(234, 67, 53, 0.6);
+    }
+
+    /* ========== SOCIAL BASE ========== */
+    .social {
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+    }
+
+    .social-link {
+      position: relative;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      cursor: pointer;
+      outline: none;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      -webkit-tap-highlight-color: transparent;
+      /* mobile tap fix */
+    }
+
+    /* ========== TOOLTIP ========== */
+    .social-link::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: -38px;
+      background: #000;
+      color: #fff;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(6px);
+      transition: 0.25s ease;
+    }
+
+    .social-link:hover::after,
+    .social-link:focus-visible::after {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ========== KEYBOARD ACCESSIBILITY ========== */
+    .social-link:focus-visible {
+      outline: 2px solid currentColor;
+      outline-offset: 4px;
+    }
+
+    /* ========== MICRO BOUNCE (HOVER) ========== */
+    .social-link:hover {
+      animation: bounce 0.35s ease;
+    }
+
+    @keyframes bounce {
+      0% {
+        transform: translateY(0) scale(1);
+      }
+
+      40% {
+        transform: translateY(-6px) scale(1.12);
+      }
+
+      100% {
+        transform: translateY(0) scale(1.08);
+      }
+    }
+
+    /* ========== RIPPLE EFFECT ========== */
+    .social-link::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: currentColor;
+      opacity: 0;
+      transform: scale(0);
+    }
+
+    .social-link:active::before {
+      animation: ripple 0.5s ease;
+    }
+
+    @keyframes ripple {
+      0% {
+        opacity: 0.35;
+        transform: scale(0);
+      }
+
+      100% {
+        opacity: 0;
+        transform: scale(2.5);
+      }
+    }
+
+    /* ========== MOBILE TAP FEEDBACK ========== */
+    .social-link:active {
+      transform: scale(0.92);
+    }
+
+    /* ========== BRAND COLORS ========== */
+    .social-link.linkedin {
+      color: #0A66C2;
+    }
+
+    .social-link.linkedin:hover {
+      background: rgba(10, 102, 194, 0.15);
+      box-shadow: 0 0 16px rgba(10, 102, 194, 0.6);
+    }
+
+    .social-link.github {
+      color: #ffffff;
+    }
+
+    body.light .social-link.github {
+      color: #181717;
+    }
+
+    .social-link.github:hover {
+      background: rgba(24, 23, 23, 0.15);
+      box-shadow: 0 0 16px rgba(24, 23, 23, 0.6);
+    }
+
+    .social-link.gmail {
+      color: #EA4335;
+    }
+
+    .social-link.gmail:hover {
+      background: rgba(234, 67, 53, 0.15);
+      box-shadow: 0 0 16px rgba(234, 67, 53, 0.6);
+    }
+
+    /* SKILL BADGE TEXT COLOR FIX */
+    .badge-skill {
+      color: #ffffff;
+      /* default dark theme */
+    }
+
+    /* Light theme override */
+    body.light .badge-skill {
+      color: #0f172a;
+      /* readable dark text */
+    }
+    /* ========== SKILLS LAYOUT ========== */
+.skills {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
 }
 
-/* BODY */
-body{
-  background:var(--bg-dark);
-  color:var(--text-dark);
-  min-height:100vh;
-  font-family:"Segoe UI",sans-serif;
-  padding:20px;
-  transition:.4s;
-}
-body.light{
-  background:var(--bg-light);
-  color:var(--text-light);
-}
-
-/* CARD */
-.profile-card{
-  background:var(--card-dark);
-  backdrop-filter:blur(12px);
-  border-radius:18px;
-  padding:32px;
-  max-width:1100px;
-  margin:auto;
-  box-shadow:0 20px 40px rgba(0,0,0,.35);
-  position:relative;
-}
-body.light .profile-card{
-  background:var(--card-light);
-}
-
-/* THEME TOGGLE */
-.theme-toggle{
-  position:absolute;
-  top:16px;
-  right:16px;
-  border:1px solid var(--primary);
-  color:var(--primary);
-  background:none;
-  padding:6px 12px;
-  border-radius:8px;
-  cursor:pointer;
-}
-
-/* PROFILE IMAGE */
-.profile-img-wrapper{
-  width:170px;
-  height:170px;
-  margin:auto;
-  border-radius:50%;
-  border:4px solid var(--primary);
-  overflow:hidden;
-  transition:.3s;
-}
-.profile-img-wrapper img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  object-position:center;
-}
-.profile-img-wrapper:hover{
-  box-shadow:0 0 25px rgba(56,189,248,.8);
-  transform:scale(1.05);
-}
-
-/* TEXT */
-.name{
-  font-size:2rem;
-  font-weight:700;
-  text-align:center;
-}
-.role{
-  color:var(--primary);
-  text-align:center;
-  font-weight:500;
-}
-
-/* TYPING */
-.typing{
-  font-weight:500;
-  color:var(--primary);
-  text-align:center;
-  height:24px;
-}
-
-/* SKILLS */
-.badge-skill{
-  background:rgba(56,189,248,.15);
-  border:1px solid rgba(56,189,248,.4);
-  margin:4px;
-}
-
-/* PROJECT CARD */
-.project-card{
-  background:rgba(255,255,255,.05);
-  border:1px solid rgba(255,255,255,.1);
-  border-radius:14px;
-  padding:16px;
-  transition:.3s;
-  height:100%;
-}
-.project-card:hover{
-  transform:translateY(-6px);
-  box-shadow:0 10px 25px rgba(0,0,0,.4);
-}
-.project-card h6{
-  color:var(--primary);
-}
-.project-card a{
-  color:var(--primary);
-  text-decoration:none;
-  font-size:.9rem;
-}
-.project-card a:hover{
-  text-decoration:underline;
-}
-
-/* SOCIAL */
-.social a{
-  font-size:26px;
-  color:var(--primary);
-  margin:0 10px;
-  cursor:pointer;
-}
-
-/* POPUP */
-.popup-overlay{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.6);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  z-index:999;
-}
-.popup-card{
-  background:#fff;
-  color:#000;
-  padding:25px;
-  border-radius:14px;
-  text-align:center;
-  width:90%;
-  max-width:320px;
-}
-.popup-card h5{
-  margin-bottom:8px;
-  font-weight:600;
-}
-/* SOCIAL BASE */
-.social-link {
-  font-size: 28px;
-  margin: 0 12px;
-  cursor: pointer;
-  transition: all 0.3s ease;
+/* BASE CHIP */
+.skill-chip {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: default;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #e5e7eb;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* LINKEDIN */
-.social-link.linkedin {
-  color: #0A66C2;
-}
-.social-link.linkedin:hover {
-  color: #0A66C2;
-  transform: translateY(-4px) scale(1.15);
-  text-shadow: 0 0 12px rgba(10, 102, 194, 0.8);
+/* ICON SIZE */
+.skill-chip i {
+  font-size: 1rem;
 }
 
-/* GITHUB */
-.social-link.github {
-  color: #181717;
-}
-body:not(.light) .social-link.github {
-  color: #ffffff;
-}
-.social-link.github:hover {
-  color: #181717;
-  transform: translateY(-4px) scale(1.15);
-  text-shadow: 0 0 12px rgba(24, 23, 23, 0.8);
+/* HOVER */
+.skill-chip:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
 }
 
-/* GMAIL */
-.social-link.gmail {
-  color: #EA4335;
-}
-.social-link.gmail:hover {
-  color: #EA4335;
-  transform: translateY(-4px) scale(1.15);
-  text-shadow: 0 0 12px rgba(234, 67, 53, 0.8);
-}
-/* SOCIAL CONTAINER */
-.social {
-  display: flex;
-  justify-content: center;
-  gap: 18px;
+/* MOBILE TAP */
+.skill-chip:active {
+  transform: scale(0.95);
 }
 
-/* BASE ICON */
-.social-link {
-  position: relative;
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 26px;
-  cursor: pointer;
-  transition: all 0.3s ease;
+/* LIGHT THEME */
+body.light .skill-chip {
+  background: rgba(0, 0, 0, 0.05);
+  border-color: rgba(0, 0, 0, 0.15);
+  color: #1f2937;
 }
 
-/* TOOLTIP */
-.social-link::after {
-  content: attr(data-tooltip);
-  position: absolute;
-  bottom: -36px;
-  background: #000;
-  color: #fff;
-  padding: 4px 8px;
-  border-radius: 6px;
-  font-size: 11px;
-  white-space: nowrap;
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(6px);
-  transition: 0.3s ease;
-}
+/* ========== OFFICIAL BRAND COLORS ========== */
 
-body.light .social-link::after {
-  background: #111;
-}
+/* React */
+.skill-chip.react i { color: #61DAFB; }
 
-.social-link:hover::after {
-  opacity: 1;
-  transform: translateY(0);
-}
+/* Next.js */
+.skill-chip.next i { color: #ffffff; }
+body.light .skill-chip.next i { color: #000000; }
 
-/* LINKEDIN */
-.social-link.linkedin {
-  color: #0A66C2;
-}
-.social-link.linkedin:hover {
-  background: rgba(10, 102, 194, 0.15);
-  color: #0A66C2;
-  transform: translateY(-4px) scale(1.15);
-  box-shadow: 0 0 16px rgba(10, 102, 194, 0.6);
-}
+/* Tailwind */
+.skill-chip.tailwind i { color: #38BDF8; }
 
-/* GITHUB */
-.social-link.github {
-  color: #ffffff;
-}
-body.light .social-link.github {
-  color: #181717;
-}
-.social-link.github:hover {
-  background: rgba(24, 23, 23, 0.15);
-  color: #181717;
-  transform: translateY(-4px) scale(1.15);
-  box-shadow: 0 0 16px rgba(24, 23, 23, 0.6);
-}
+/* JavaScript */
+.skill-chip.js i { color: #F7DF1E; }
 
-/* GMAIL */
-.social-link.gmail {
-  color: #EA4335;
-}
-.social-link.gmail:hover {
-  background: rgba(234, 67, 53, 0.15);
-  color: #EA4335;
-  transform: translateY(-4px) scale(1.15);
-  box-shadow: 0 0 16px rgba(234, 67, 53, 0.6);
-}
-/* ========== SOCIAL BASE ========== */
-.social {
-  display: flex;
-  justify-content: center;
-  gap: 18px;
-}
+/* HTML */
+.skill-chip.html i { color: #E34F26; }
 
-.social-link {
-  position: relative;
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 26px;
-  cursor: pointer;
-  outline: none;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-  -webkit-tap-highlight-color: transparent; /* mobile tap fix */
-}
+/* CSS */
+.skill-chip.css i { color: #1572B6; }
 
-/* ========== TOOLTIP ========== */
-.social-link::after {
-  content: attr(data-tooltip);
-  position: absolute;
-  bottom: -38px;
-  background: #000;
-  color: #fff;
-  padding: 4px 8px;
-  border-radius: 6px;
-  font-size: 11px;
-  white-space: nowrap;
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(6px);
-  transition: 0.25s ease;
-}
+/* Bootstrap */
+.skill-chip.bootstrap i { color: #7952B3; }
 
-.social-link:hover::after,
-.social-link:focus-visible::after {
-  opacity: 1;
-  transform: translateY(0);
-}
+/* Node */
+.skill-chip.node i { color: #339933; }
 
-/* ========== KEYBOARD ACCESSIBILITY ========== */
-.social-link:focus-visible {
-  outline: 2px solid currentColor;
-  outline-offset: 4px;
-}
+/* MongoDB */
+.skill-chip.mongo i { color: #47A248; }
 
-/* ========== MICRO BOUNCE (HOVER) ========== */
-.social-link:hover {
-  animation: bounce 0.35s ease;
-}
-
-@keyframes bounce {
-  0%   { transform: translateY(0) scale(1); }
-  40%  { transform: translateY(-6px) scale(1.12); }
-  100% { transform: translateY(0) scale(1.08); }
-}
-
-/* ========== RIPPLE EFFECT ========== */
-.social-link::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  background: currentColor;
-  opacity: 0;
-  transform: scale(0);
-}
-
-.social-link:active::before {
-  animation: ripple 0.5s ease;
-}
-
-@keyframes ripple {
-  0% {
-    opacity: 0.35;
-    transform: scale(0);
-  }
-  100% {
-    opacity: 0;
-    transform: scale(2.5);
-  }
-}
-
-/* ========== MOBILE TAP FEEDBACK ========== */
-.social-link:active {
-  transform: scale(0.92);
-}
-
-/* ========== BRAND COLORS ========== */
-.social-link.linkedin {
-  color: #0A66C2;
-}
-.social-link.linkedin:hover {
-  background: rgba(10, 102, 194, 0.15);
-  box-shadow: 0 0 16px rgba(10, 102, 194, 0.6);
-}
-
-.social-link.github {
-  color: #ffffff;
-}
-body.light .social-link.github {
-  color: #181717;
-}
-.social-link.github:hover {
-  background: rgba(24, 23, 23, 0.15);
-  box-shadow: 0 0 16px rgba(24, 23, 23, 0.6);
-}
-
-.social-link.gmail {
-  color: #EA4335;
-}
-.social-link.gmail:hover {
-  background: rgba(234, 67, 53, 0.15);
-  box-shadow: 0 0 16px rgba(234, 67, 53, 0.6);
-}
-
-
-
-</style>
+  </style>
 </head>
 
 <body>
 
-<div class="profile-card">
+  <div class="profile-card">
 
-<!-- THEME TOGGLE -->
-<button class="theme-toggle" onclick="toggleTheme()">🌙 / ☀️</button>
+    <!-- THEME TOGGLE -->
+    <button class="theme-toggle" onclick="toggleTheme()">🌙 / ☀️</button>
 
-<!-- PROFILE -->
-<div class="text-center">
-  <div class="profile-img-wrapper mb-3">
-    <img src="public/images/cha.jpg" alt="Soumya Ranjan Swain">
-  </div>
+    <!-- PROFILE -->
+    <div class="text-center">
+      <div class="profile-img-wrapper mb-3">
+        <img src="public/images/cha.jpg" alt="Soumya Ranjan Swain" class="profile-img" />
+      </div>
 
-  <h1 class="name">Soumya Ranjan Swain</h1>
-  <p class="role">Frontend Developer</p>
-  <div class="typing" id="typing"></div>
 
-  <div class="mt-3">
-    <a href="public/Soumya_Ranjan_Swain_Frontend_Developer.pdf"
-       class="btn btn-info fw-semibold" download>
-      <i class="bi bi-download"></i> Download Resume
-    </a>
-  </div>
+      <h1 class="name">Soumya Ranjan Swain</h1>
+      <p class="role">Frontend Developer</p>
+      <div class="typing" id="typing"></div>
 
-  <!-- SKILLS -->
-  <div class="mt-4">
-    <span class="badge badge-skill">React.js</span>
-    <span class="badge badge-skill">Next.js</span>
-    <span class="badge badge-skill">Tailwind CSS</span>
-    <span class="badge badge-skill">JavaScript</span>
-    <span class="badge badge-skill">HTML</span>
-    <span class="badge badge-skill">CSS</span>
-    <span class="badge badge-skill">Bootstrap</span>
-    <span class="badge badge-skill">Node.js</span>
-    <span class="badge badge-skill">MongoDB</span>
-  </div>
+      <div class="mt-3">
+        <a href="public/Soumya_Ranjan_Swain_Frontend_Developer.pdf" class="btn btn-info fw-semibold" download>
+          <i class="bi bi-download"></i> Download Resume
+        </a>
+      </div>
+
+      <!-- SKILLS -->
+      <div class="mt-4 skills">
+  <span class="skill-chip react"><i class="bx bxl-react"></i> React.js</span>
+  <span class="skill-chip next"><i class="bx bxl-nextjs"></i> Next.js</span>
+  <span class="skill-chip tailwind"><i class="bx bxl-tailwind-css"></i> Tailwind CSS</span>
+  <span class="skill-chip js"><i class="bx bxl-javascript"></i> JavaScript</span>
+  <span class="skill-chip html"><i class="bx bxl-html5"></i> HTML</span>
+  <span class="skill-chip css"><i class="bx bxl-css3"></i> CSS</span>
+  <span class="skill-chip bootstrap"><i class="bx bxl-bootstrap"></i> Bootstrap</span>
+  <span class="skill-chip node"><i class="bx bxl-nodejs"></i> Node.js</span>
+  <span class="skill-chip mongo"><i class="bx bxl-mongodb"></i> MongoDB</span>
 </div>
 
-<!-- PROJECT GRID -->
-<h4 class="mt-5 mb-3 text-center">🚀 Projects</h4>
-<div class="row g-4">
+    </div>
 
-  <div class="col-lg-3 col-md-4 col-sm-6">
-    <div class="project-card">
-      <h6>EMI Calculator</h6>
-      <p class="small">Loan EMI calculator</p>
-      <a href="public/emi-calculator.html">View Project →</a>
+    <!-- PROJECT GRID -->
+    <h4 class="mt-5 mb-3 text-center">🚀 Projects</h4>
+    <div class="row g-4">
+
+      <div class="col-lg-3 col-md-4 col-sm-6">
+        <div class="project-card">
+          <h6>EMI Calculator</h6>
+          <p class="small">Loan EMI calculator</p>
+          <a href="public/emi-calculator.html">View Project →</a>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-4 col-sm-6">
+        <div class="project-card">
+          <h6>FakeStore</h6>
+          <p class="small">E-commerce UI</p>
+          <a href="public/Fakestore.html">View Project →</a>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-4 col-sm-6">
+        <div class="project-card">
+          <h6>KFC Online</h6>
+          <p class="small">Food ordering UI</p>
+          <a href="public/kfc-online.html">View Project →</a>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-4 col-sm-6">
+        <div class="project-card">
+          <h6>Netflix UI</h6>
+          <p class="small">Netflix clone</p>
+          <a href="public/Netflix.html">View Project →</a>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-4 col-sm-6">
+        <div class="project-card">
+          <h6>YouTube UI</h6>
+          <p class="small">YouTube clone</p>
+          <a href="public/YouTube.html">View Project →</a>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-4 col-sm-6">
+        <div class="project-card">
+          <h6>Shopper Template</h6>
+          <p class="small">E-commerce template</p>
+          <a href="public/shopper-template.html">View Project →</a>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-4 col-sm-6">
+        <div class="project-card">
+          <h6>INOX Movies</h6>
+          <p class="small">Movie booking UI</p>
+          <a href="public/Inox.html">View Project →</a>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-4 col-sm-6">
+        <div class="project-card">
+          <h6>Tic Tac Toe</h6>
+          <p class="small">JS game</p>
+          <a href="public/tic-tac-toe.html">View Project →</a>
+        </div>
+      </div>
+
+    </div>
+
+
+
+    <!-- SOCIAL -->
+    <div class="social text-center mt-4">
+      <a class="social-link linkedin" onclick="openPopup('linkedin')" onkeydown="handleKey(event, 'linkedin')"
+        tabindex="0" role="button" aria-label="Open LinkedIn profile" data-tooltip="LinkedIn">
+        <i class="bx bxl-linkedin"></i>
+      </a>
+
+      <a class="social-link github" onclick="openPopup('github')" onkeydown="handleKey(event, 'github')" tabindex="0"
+        role="button" aria-label="Open GitHub profile" data-tooltip="GitHub">
+        <i class="bx bxl-github"></i>
+      </a>
+
+      <a class="social-link gmail" onclick="openPopup('gmail')" onkeydown="handleKey(event, 'gmail')" tabindex="0"
+        role="button" aria-label="Send email" data-tooltip="Email">
+        <i class="bx bxl-gmail"></i>
+      </a>
+    </div>
+
+
+
+  </div>
+
+  <!-- POPUP -->
+  <div id="socialPopup" class="popup-overlay">
+    <div class="popup-card">
+      <h5 id="popupTitle"></h5>
+      <p id="popupText"></p>
+      <div class="mt-3">
+        <a id="popupLink" target="_blank" class="btn btn-info me-2">Open</a>
+        <button onclick="closePopup()" class="btn btn-secondary">Close</button>
+      </div>
     </div>
   </div>
 
-  <div class="col-lg-3 col-md-4 col-sm-6">
-    <div class="project-card">
-      <h6>FakeStore</h6>
-      <p class="small">E-commerce UI</p>
-      <a href="public/Fakestore.html">View Project →</a>
-    </div>
-  </div>
+  <script>
+    /* THEME */
+    function toggleTheme() {
+      document.body.classList.toggle("light");
+    }
 
-  <div class="col-lg-3 col-md-4 col-sm-6">
-    <div class="project-card">
-      <h6>KFC Online</h6>
-      <p class="small">Food ordering UI</p>
-      <a href="public/kfc-online.html">View Project →</a>
-    </div>
-  </div>
+    /* TYPING */
+    const roles = ["React Developer", "Next.js Developer", "UI Engineer", "MERN Stack Developer"];
+    let i = 0, j = 0, forward = true;
+    const el = document.getElementById("typing");
+    setInterval(() => {
+      if (forward) {
+        el.textContent = roles[i].slice(0, ++j);
+        if (j === roles[i].length) forward = false;
+      } else {
+        el.textContent = roles[i].slice(0, --j);
+        if (j === 0) { forward = true; i = (i + 1) % roles.length; }
+      }
+    }, 120);
 
-  <div class="col-lg-3 col-md-4 col-sm-6">
-    <div class="project-card">
-      <h6>Netflix UI</h6>
-      <p class="small">Netflix clone</p>
-      <a href="public/Netflix.html">View Project →</a>
-    </div>
-  </div>
+    /* POPUP */
+    const popup = document.getElementById("socialPopup");
+    const popupTitle = document.getElementById("popupTitle");
+    const popupText = document.getElementById("popupText");
+    const popupLink = document.getElementById("popupLink");
 
-  <div class="col-lg-3 col-md-4 col-sm-6">
-    <div class="project-card">
-      <h6>YouTube UI</h6>
-      <p class="small">YouTube clone</p>
-      <a href="public/YouTube.html">View Project →</a>
-    </div>
-  </div>
+    function openPopup(type) {
+      popup.style.display = "flex";
+      if (type === "linkedin") {
+        popupTitle.innerText = "LinkedIn Profile";
+        popupText.innerText = "View my LinkedIn profile.";
+        popupLink.href = "https://www.linkedin.com/in/soumya1234/";
+      }
+      if (type === "github") {
+        popupTitle.innerText = "GitHub Profile";
+        popupText.innerText = "Check my repositories.";
+        popupLink.href = "https://github.com/soumyaranjanswain2";
+      }
+      if (type === "gmail") {
+        popupTitle.innerText = "Email Me";
+        popupText.innerText = "Send me an email.";
+        popupLink.href = "mailto:soumyaranjan8428@gmail.com";
+      }
+    }
+    function closePopup() {
+      popup.style.display = "none";
+    }
+    function handleKey(e, type) {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        openPopup(type);
+      }
+    }
 
-  <div class="col-lg-3 col-md-4 col-sm-6">
-    <div class="project-card">
-      <h6>Shopper Template</h6>
-      <p class="small">E-commerce template</p>
-      <a href="public/shopper-template.html">View Project →</a>
-    </div>
-  </div>
-
-  <div class="col-lg-3 col-md-4 col-sm-6">
-    <div class="project-card">
-      <h6>INOX Movies</h6>
-      <p class="small">Movie booking UI</p>
-      <a href="public/Inox.html">View Project →</a>
-    </div>
-  </div>
-
-  <div class="col-lg-3 col-md-4 col-sm-6">
-    <div class="project-card">
-      <h6>Tic Tac Toe</h6>
-      <p class="small">JS game</p>
-      <a href="public/tic-tac-toe.html">View Project →</a>
-    </div>
-  </div>
-
-</div>
-
-<!-- SOCIAL -->
-<div class="social text-center mt-4">
-  <a class="social-link linkedin"
-     onclick="openPopup('linkedin')"
-     onkeydown="handleKey(event, 'linkedin')"
-     tabindex="0"
-     role="button"
-     aria-label="Open LinkedIn profile"
-     data-tooltip="LinkedIn">
-    <i class="bx bxl-linkedin"></i>
-  </a>
-
-  <a class="social-link github"
-     onclick="openPopup('github')"
-     onkeydown="handleKey(event, 'github')"
-     tabindex="0"
-     role="button"
-     aria-label="Open GitHub profile"
-     data-tooltip="GitHub">
-    <i class="bx bxl-github"></i>
-  </a>
-
-  <a class="social-link gmail"
-     onclick="openPopup('gmail')"
-     onkeydown="handleKey(event, 'gmail')"
-     tabindex="0"
-     role="button"
-     aria-label="Send email"
-     data-tooltip="Email">
-    <i class="bx bxl-gmail"></i>
-  </a>
-</div>
-
-
-
-</div>
-
-<!-- POPUP -->
-<div id="socialPopup" class="popup-overlay">
-  <div class="popup-card">
-    <h5 id="popupTitle"></h5>
-    <p id="popupText"></p>
-    <div class="mt-3">
-      <a id="popupLink" target="_blank" class="btn btn-info me-2">Open</a>
-      <button onclick="closePopup()" class="btn btn-secondary">Close</button>
-    </div>
-  </div>
-</div>
-
-<script>
-/* THEME */
-function toggleTheme(){
-  document.body.classList.toggle("light");
-}
-
-/* TYPING */
-const roles=["React Developer","Next.js Developer","UI Engineer","MERN Stack Developer"];
-let i=0,j=0,forward=true;
-const el=document.getElementById("typing");
-setInterval(()=>{
-  if(forward){
-    el.textContent=roles[i].slice(0,++j);
-    if(j===roles[i].length) forward=false;
-  }else{
-    el.textContent=roles[i].slice(0,--j);
-    if(j===0){forward=true;i=(i+1)%roles.length;}
-  }
-},120);
-
-/* POPUP */
-const popup=document.getElementById("socialPopup");
-const popupTitle=document.getElementById("popupTitle");
-const popupText=document.getElementById("popupText");
-const popupLink=document.getElementById("popupLink");
-
-function openPopup(type){
-  popup.style.display="flex";
-  if(type==="linkedin"){
-    popupTitle.innerText="LinkedIn Profile";
-    popupText.innerText="View my LinkedIn profile.";
-    popupLink.href="https://www.linkedin.com/in/soumya1234/";
-  }
-  if(type==="github"){
-    popupTitle.innerText="GitHub Profile";
-    popupText.innerText="Check my repositories.";
-    popupLink.href="https://github.com/soumyaranjanswain2";
-  }
-  if(type==="gmail"){
-    popupTitle.innerText="Email Me";
-    popupText.innerText="Send me an email.";
-    popupLink.href="mailto:soumyaranjan8428@gmail.com";
-  }
-}
-function closePopup(){
-  popup.style.display="none";
-}
-function handleKey(e, type) {
-  if (e.key === "Enter" || e.key === " ") {
-    e.preventDefault();
-    openPopup(type);
-  }
-}
-
-</script>
+  </script>
 
 </body>
+
 </html>

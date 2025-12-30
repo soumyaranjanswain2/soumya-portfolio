@@ -1,83 +1,298 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EMI Calculator</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-    <style>
-        input[type="range"]{
-            width: 100%;
-        }
-    </style>
-    <script type="text/javascript">
-         function AmountChange(){
-             document.getElementById("txtAmount").value = document.getElementById("amountRange").value;
-         }
-         function YearChange(){
-            document.getElementById("txtYears").value = document.getElementById("yearRange").value;
-         }
-         function RateChange(){
-            document.getElementById("txtRate").value = document.getElementById("rateRange").value;
-         }
-         function CalculateClick(){
-              var P = parseInt(document.getElementById("txtAmount").value);
-              var N = parseInt(document.getElementById("txtYears").value) * 12;
-              var R = parseFloat(document.getElementById("txtRate").value)/12/100;
-              var EMI = P * R * (Math.pow(1+R,N)) / (Math.pow(1+R,N))-1;
-              document.getElementById("result").innerHTML = "Your monthly Installment amount is &#8377;" + Math.round(EMI);
-         }
-    </script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Bank EMI Calculator</title>
+
+<!-- Bootstrap -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
+
+<style>
+:root{
+  --bank-blue:#0047AB;     /* Axis / HDFC style */
+  --bank-bg:#f4f7fb;
+  --card:#ffffff;
+  --text:#1f2937;
+}
+
+/* BODY */
+body{
+  background:var(--bank-bg);
+  font-family:system-ui,-apple-system;
+  color:var(--text);
+  padding:16px;
+}
+
+/* CARD */
+.bank-card{
+  max-width:980px;
+  margin:auto;
+  background:var(--card);
+  border-radius:14px;
+  padding:18px;
+  box-shadow:0 12px 28px rgba(0,0,0,.12);
+}
+
+/* HEADER */
+.bank-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:16px;
+}
+.bank-title{
+  font-weight:700;
+  color:var(--bank-blue);
+}
+
+/* INPUT */
+label{
+  font-size:.8rem;
+  font-weight:600;
+}
+.form-control{
+  height:34px;
+  font-size:.85rem;
+}
+input[type=range]{
+  accent-color:var(--bank-blue);
+}
+
+/* SUMMARY */
+.summary-box{
+  background:#f1f5ff;
+  border-radius:12px;
+  padding:16px;
+}
+.summary-box h3{
+  color:var(--bank-blue);
+  font-weight:700;
+}
+
+/* TABLE */
+.table{
+  font-size:.78rem;
+}
+
+/* MOBILE */
+@media(max-width:768px){
+  .bank-card{padding:14px}
+}
+</style>
 </head>
-<body class="container-fluid bg-dark text-white">
-    <div class="bg-white text-dark p-3 m-3">
-        <h1 class="text-primary text-center">Personal Loan Calculator</h1>
-        <div class="row mt-4">
-            <div class="col text-center">
-                Amount you need &#8377; <input type="text" id="txtAmount">
-            </div>
-            <div class="col text-center">
-                for <input type="text" size="4" id="txtYears"> years
-            </div>
-            <div class="col text-center">
-                Interest rate <input type="text" size="4" id="txtRate"> %
-            </div>
-        </div>
-        <div class="row mt-4">
-            <div class="col text-center">
-                <input type="range" onchange="AmountChange()" id="amountRange" min="50000" max="500000" value="50000">
-            </div>
-            <div class="col text-center">
-                <input type="range" onchange="YearChange()" id="yearRange" min="1" max="5" value="1">
-            </div>
-            <div class="col text-center">
-                <input type="range" onchange="RateChange()" id="rateRange" min="8.45" max="12.45" value="8.45" step="0.01">
-            </div>
-        </div>
-        <div class="row mt-2">
-            <div class="col d-flex justify-content-between">
-                <span>&#8377; 50,000</span>
-                <span>&#8377; 5,00,000</span>
-            </div>
-            <div class="col d-flex justify-content-between">
-                <span>1</span>
-                <span>5</span>
-            </div>
-            <div class="col d-flex justify-content-between">
-                <span>8.45%</span>
-                <span>12.45%</span>
-            </div>
-        </div>
-        <div class="row mt-4">
-            <div class="col text-end">
-                <button onclick="CalculateClick()" class="btn btn-primary">Calculate</button>
-            </div>
-        </div>
-        <div class="mt-4">
-            <p id="result" class="text-center h2 text-success"></p>
-        </div>
-    </div>    
+
+<body>
+
+<div class="bank-card">
+
+<!-- HEADER -->
+<div class="bank-header">
+  <h5 class="bank-title">🏦 Personal Loan EMI Calculator</h5>
+  <button class="btn btn-sm btn-outline-primary" onclick="toggleTheme()">🌙 / ☀️</button>
+</div>
+
+<!-- ROW 1 : INPUTS -->
+<div class="row g-3 mb-3">
+
+  <div class="col-md-4">
+    <label>Loan Amount (₹)</label>
+    <input type="number" id="amount" class="form-control" value="300000" oninput="sync()">
+    <input type="range" id="amountRange" min="50000" max="1000000" step="1000"
+           value="300000" oninput="sync()">
+  </div>
+
+  <div class="col-md-4">
+    <label>Tenure (Years)</label>
+    <input type="number" id="years" class="form-control" value="3" oninput="sync()">
+    <input type="range" id="yearsRange" min="1" max="7" value="3" oninput="sync()">
+  </div>
+
+  <div class="col-md-4">
+    <label>Interest Rate (%)</label>
+    <input type="number" id="rate" class="form-control" value="10.5" step="0.1" oninput="sync()">
+    <input type="range" id="rateRange" min="8" max="15" step="0.1"
+           value="10.5" oninput="sync()">
+  </div>
+
+</div>
+
+<!-- ROW 2 : SUMMARY + CHART -->
+<div class="row g-3 align-items-center mb-4">
+
+  <div class="col-md-4">
+    <div class="summary-box text-center">
+      <small class="text-muted">Monthly EMI</small>
+      <h3 id="emi">₹0</h3>
+      <small class="text-muted">As per bank calculation</small>
+    </div>
+  </div>
+
+  <div class="col-md-8">
+    <canvas id="emiChart" height="130"></canvas>
+  </div>
+<div class="text-end mt-3">
+  <button class="btn btn-outline-primary btn-sm" onclick="downloadPDF()">
+    📄 Download EMI Statement (PDF)
+  </button>
+</div>
+
+</div>
+
+<!-- AMORTIZATION -->
+<h6 class="fw-bold mb-2">📄 Amortization Schedule</h6>
+<div class="table-responsive">
+<table class="table table-bordered">
+<thead class="table-light">
+<tr>
+<th>Month</th>
+<th>EMI</th>
+<th>Principal</th>
+<th>Interest</th>
+<th>Balance</th>
+</tr>
+</thead>
+<tbody id="tableBody"></tbody>
+</table>
+</div>
+
+</div>
+
+<script>
+let chart;
+let dark=false;
+
+function toggleTheme(){
+  dark=!dark;
+  document.body.style.background = dark ? "#020617" : "#f4f7fb";
+  document.querySelector(".bank-card").style.background = dark ? "#020617" : "#fff";
+  document.querySelector(".bank-card").style.color = dark ? "#fff" : "#1f2937";
+}
+
+/* SYNC */
+function sync(){
+  amountRange.value=amount.value;
+  yearsRange.value=years.value;
+  rateRange.value=rate.value;
+  calculate();
+}
+
+/* CALC */
+function calculate(){
+  const P=+amount.value;
+  const R=(+rate.value/12)/100;
+  const N=+years.value*12;
+
+  const EMI=(P*R*Math.pow(1+R,N))/(Math.pow(1+R,N)-1);
+  emi.innerText="₹ "+EMI.toFixed(0);
+
+  let balance=P;
+  let rows="";
+  let labels=[], data=[];
+
+  for(let i=1;i<=N;i++){
+    const interest=balance*R;
+    const principal=EMI-interest;
+    balance-=principal;
+
+    labels.push(i);
+    data.push(EMI.toFixed(0));
+
+    rows+=`
+      <tr>
+        <td>${i}</td>
+        <td>₹${EMI.toFixed(0)}</td>
+        <td>₹${principal.toFixed(0)}</td>
+        <td>₹${interest.toFixed(0)}</td>
+        <td>₹${Math.max(balance,0).toFixed(0)}</td>
+      </tr>`;
+  }
+
+  tableBody.innerHTML=rows;
+  drawChart(labels,data);
+}
+
+function drawChart(labels,data){
+  if(chart) chart.destroy();
+  chart=new Chart(document.getElementById("emiChart"),{
+    type:"line",
+    data:{
+      labels,
+      datasets:[{
+        data,
+        borderColor:"#0047AB",
+        tension:.35,
+        fill:false
+      }]
+    },
+    options:{
+      plugins:{legend:{display:false}},
+      scales:{x:{display:false}}
+    }
+  });
+}
+
+calculate();
+async function downloadPDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+
+  const loanAmount = amount.value;
+  const tenure = years.value;
+  const interest = rate.value;
+  const emiValue = emi.innerText;
+
+  /* HEADER */
+  doc.setFontSize(16);
+  doc.text("Personal Loan EMI Statement", 14, 15);
+
+  doc.setFontSize(10);
+  doc.text("Generated by EMI Calculator", 14, 22);
+
+  /* SUMMARY */
+  doc.setFontSize(11);
+  doc.text(`Loan Amount: ₹${loanAmount}`, 14, 32);
+  doc.text(`Tenure: ${tenure} Years`, 14, 38);
+  doc.text(`Interest Rate: ${interest}%`, 14, 44);
+  doc.text(`Monthly EMI: ${emiValue}`, 14, 50);
+
+  /* TABLE DATA */
+  const tableRows = [];
+  document.querySelectorAll("#tableBody tr").forEach(row => {
+    const cells = row.querySelectorAll("td");
+    tableRows.push([
+      cells[0].innerText,
+      cells[1].innerText,
+      cells[2].innerText,
+      cells[3].innerText,
+      cells[4].innerText
+    ]);
+  });
+
+  /* TABLE */
+  doc.autoTable({
+    startY: 58,
+    head: [["Month", "EMI", "Principal", "Interest", "Balance"]],
+    body: tableRows,
+    theme: "grid",
+    styles: { fontSize: 8 },
+    headStyles: { fillColor: [0, 71, 171] }
+  });
+
+  /* FOOTER */
+  doc.setFontSize(9);
+  doc.text(
+    "This is a system generated statement. No signature required.",
+    14,
+    doc.internal.pageSize.height - 10
+  );
+
+  doc.save("EMI_Statement.pdf");
+}
+</script>
+
 </body>
 </html>
