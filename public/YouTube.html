@@ -1,199 +1,409 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YouTube | NareshIT</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-    <style>
-        .bi-justify {
-            font-size: 25px;
-        }
-        .search-bar {
-            border:1px solid gray;
-            width: 500px;
-            padding: 5px;
-            border-radius: 20px;
-            display: flex;
-            justify-content: space-between;
-        }
-        .search-area {
-            display: flex;
-        }
-        .bi-mic-fill {
-            font-size: 20px;
-            margin-left: 20px;
-        }
-        .logo {
-            background-color: lightgray;
-            font-size: 15px;
-            padding: 5px;
-            border-radius: 20px;
-            font-family: Arial;
-        }
-        header {
-            display: flex;
-            justify-content: space-between;
-        }
-        .shortcut-icons span {
-            margin-right: 20px;
-            font-size: 25px;
-        }
-        section {
-            display: grid;
-            grid-template-columns: 2fr 10fr;
-            margin-top: 20px;
-        }
-        ul {
-            list-style: none;
-            margin-left: -40px;
-        }
-        li {
-            padding: 20px;
-            font-size: 20px;
-            display: flex;
-            justify-content: space-between;
-            width: 120px;
-            background-color: rgb(244, 243, 243);
-            margin-bottom: 10px;
-        }
-        .channel-logo-area {
-            display: flex;
-            margin-top: 20px;
-            font-family: Arial;
-        }
-        .logo-title {
-            font-size: 30px;
-            margin-bottom: 10px;
-        }
-        .logo-subtitle {
-            margin-bottom: 20px;
-        }
-        .subscribe {
-            background-color: black;
-            color:white;
-            border-radius: 20px;
-            padding: 10px;
-            margin-left: 150px;
-        }
-        .body-nav {
-            font-family: Arial;
-            font-size: 20px;
-            color:gray;
-            margin-top: 30px;
-        }
-        .body-nav span {
-            margin-right: 30px;
-        }
-        article {
-            margin-top: 20px;
-            display: flex;
-            font-family: Arial;
-        }
-        article iframe {
-            width: 400px;
-            height: 220px;
-            margin-right: 40px;
-        }
-        .article-content div {
-            margin-bottom: 10px;
-        }
-        .videos-row iframe {
-            width: 200px;
-        }
-        .videos-row {
-            display: flex;
-            margin-top: 20px;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YouTube | NareshIT</title>
+
+<!-- Bootstrap -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css" rel="stylesheet">
+
+<style>
+/* ===== GLOBAL ===== */
+body {
+  margin: 0;
+  font-family: system-ui, Arial;
+  background: #f9f9f9;
+}
+
+/* ===== HEADER ===== */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: #fff;
+  padding: 10px 20px;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* ===== ADD: DARK MODE ===== */
+body.dark {
+  background: #0f172a;
+  color: #e5e7eb;
+}
+body.dark header,
+body.dark aside {
+  background: #111827;
+  color: #e5e7eb;
+}
+body.dark .search-bar input {
+  background: #1f2937;
+  color: #fff;
+}
+
+/* ===== ADD: LIKE ===== */
+.like-btn {
+  cursor: pointer;
+  font-size: 16px;
+}
+.like-btn.active {
+  color: red;
+}
+
+/* ===== ADD: MOBILE NAV ===== */
+.mobile-nav {
+  display: none;
+}
+@media(max-width:768px){
+  .mobile-nav {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: #fff;
+    border-top: 1px solid #ddd;
+    justify-content: space-around;
+    padding: 10px 0;
+    z-index: 1000;
+  }
+  body.dark .mobile-nav {
+    background: #111827;
+  }
+}
+
+/* ===== EXISTING CSS CONTINUES ===== */
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.header-center {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.search-bar {
+  width: 450px;
+  border: 1px solid #ccc;
+  border-radius: 25px;
+  display: flex;
+  overflow: hidden;
+}
+.search-bar input {
+  flex: 1;
+  border: none;
+  padding: 8px 15px;
+  outline: none;
+}
+.search-bar button {
+  border: none;
+  background: #f1f1f1;
+  padding: 0 15px;
+}
+.header-right span {
+  font-size: 22px;
+  margin-left: 15px;
+  cursor: pointer;
+}
+.profile {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background: #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+.layout {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+}
+aside {
+  background: #fff;
+  padding: 15px;
+  height: calc(100vh - 60px);
+  position: sticky;
+  top: 60px;
+}
+aside ul {
+  list-style: none;
+  padding: 0;
+}
+aside li {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+aside li:hover {
+  background: #eee;
+}
+main {
+  padding: 20px;
+}
+.channel-banner img {
+  width: 100%;
+  border-radius: 12px;
+}
+.channel-info {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  gap: 20px;
+}
+.channel-info img {
+  width: 120px;
+}
+.subscribe {
+  margin-left: auto;
+  background: #000;
+  color: #fff;
+  border-radius: 20px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+.subscribe.active {
+  background: #aaa;
+  color: #000;
+}
+.tabs {
+  display: flex;
+  gap: 20px;
+  margin-top: 25px;
+  border-bottom: 1px solid #ddd;
+}
+.tabs span {
+  padding-bottom: 10px;
+  cursor: pointer;
+}
+.tabs span.active {
+  border-bottom: 2px solid #000;
+  font-weight: 600;
+}
+.featured {
+  display: flex;
+  gap: 25px;
+  margin-top: 30px;
+}
+.featured iframe {
+  width: 420px;
+  height: 240px;
+  border-radius: 12px;
+}
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+  margin-top: 30px;
+}
+.video-card iframe {
+  width: 100%;
+  height: 130px;
+  border-radius: 12px;
+}
+.video-card p {
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: 500;
+}
+@media(max-width: 768px) {
+  .layout { grid-template-columns: 1fr; }
+  aside { display: none; }
+  .search-bar { width: 100%; }
+  .featured { flex-direction: column; }
+}
+</style>
 </head>
+
 <body>
-    <header>
-        <div>
-            <span class="bi bi-justify"></span>
-            <img src="../public/images/youtube-logo.png" width="90" height="30">
-        </div>
-        <div class="search-area">
-            <div class="search-bar">
-                <span>Search</span>
-                <span class="bi bi-search"></span>
-            </div>
-            <span class="bi bi-mic-fill"></span>
-        </div>
-        <div class="shortcut-icons">
-            <span class="bi bi-camera-video"></span>
-            <span class="bi bi-bell"></span>
-            <span class="logo">N</span>
-        </div>
-    </header>
-    <section>
-        <nav>
-            <ul>
-                <li><span class="bi bi-house"></span> <span>Home</span> </li>
-                <li><span class="bi bi-film"></span> <span>Shorts</span> </li>
-                <li><span class="bi bi-camera-reels"></span> <span>Videos</span> </li>
-                <li><span class="bi bi-collection-play"></span> <span>Library</span> </li>
-            </ul>
-        </nav>
-        <main>
-            <div>
-                <img src="../public/images/YouTube-Channel-Banner.png" width="100%">
-            </div>
-            <div class="channel-logo-area">
-                <div>
-                    <img src="../public/images/nareshit-logo.png" height="120">
-                </div>
-                <div>
-                    <div class="logo-title">Naresh i Technologies</div>
-                    <div class="logo-subtitle">@NareshIT1.15M subscribers2.8K videos</div>
-                    <div class="logo-text">We are one of the India's largest software training organization and an Top..</div>
-                </div>
-                <div>
-                    <div class="subscribe">Subscribe</div>
-                </div>
-            </div>
-            <div class="body-nav">
-                <span>Home</span>
-                <span>Videos</span>
-                <span>Shorts</span>
-                <span>Live</span>
-                <span>Playlists</span>
-                <span>Community</span>
-                <span>Channels</span>
-                <span>About</span>
-            </div>
-            <article>
-                <div>
-                    <iframe src="https://www.youtube.com/embed/pfbVg3Ie3hk"></iframe&gt;
-                </div>
-                <div class="article-content">
-                    <div>Best Software Training Institute with Placements - Naresh i Technologies</div>
-                    <div>177,953 views</div>
-                    <div>3 years ago</div>
-                    <div>Register For Free Demos On New Batches :</div>
-                    <div>
-                        Python @ 9.00 AM :  https://bit.ly/47k8ZDd <br>
-                        Mulesoft @ 7.30 PM : https://bit.ly/3Ya9Ou1 <br>
-                        Full Stack Java Development @ 6.00 PM :  https://bit.ly/3qivR5m <br>
-                        Python (LeetCode & HeakerRank) @ 9.30 PM :  https://bit.ly/44PYJRf <br>
-                        Full Stack Python Developer @ 9.00 AM :  https://bit.ly/47k8ZDd <br>
-                        ASP Dot Net MVC5+MVC Core @ 9.00 AM :  https://bit.ly/3OD5u3i
-                    </div>
-                </div>
-            </article>
-            <div>
-              Videos  <span class="bi bi-camera-video"></span>
-            </div>
-            <div class="videos-row">
-                <div><iframe src="https://www.youtube.com/embed/um--b2LgWlU"></iframe></div&gt;
-                <div><iframe src="https://www.youtube.com/embed/um--b2LgWlU"></iframe></div&gt;
-                <div><iframe src="https://www.youtube.com/embed/um--b2LgWlU"></iframe></div&gt;
-                <div><iframe src="https://www.youtube.com/embed/um--b2LgWlU"></iframe></div&gt;
-                <div><iframe src="https://www.youtube.com/embed/um--b2LgWlU"></iframe></div&gt;
-            </div>
-        </main>
-    </section>
+
+<header>
+  <div class="header-left">
+    <i class="bi bi-list fs-3"></i>
+    <img src="../public/images/youtube-logo.png" height="30">
+  </div>
+
+  <div class="header-center">
+    <div class="search-bar">
+      <input type="text" placeholder="Search" id="searchInput">
+      <button><i class="bi bi-search"></i></button>
+    </div>
+    <i class="bi bi-mic-fill fs-4"></i>
+  </div>
+
+  <div class="header-right">
+    <span class="bi bi-camera-video"></span>
+    <span class="bi bi-bell"></span>
+    <span class="bi bi-moon-fill" onclick="toggleTheme()"></span>
+    <div class="profile">N</div>
+  </div>
+</header>
+
+<div class="layout">
+  <aside>
+    <ul>
+      <li><i class="bi bi-house"></i> Home</li>
+      <li><i class="bi bi-play-btn"></i> Shorts</li>
+      <li><i class="bi bi-collection-play"></i> Subscriptions</li>
+      <li><i class="bi bi-clock-history"></i> History</li>
+    </ul>
+  </aside>
+
+  <main>
+    <div class="channel-banner">
+      <img src="../public/images/YouTube-Channel-Banner.png">
+    </div>
+
+    <div class="channel-info">
+      <img src="../public/images/nareshit-logo.png">
+      <div>
+        <h4>Naresh i Technologies</h4>
+        <p class="text-muted">@NareshIT • 1.15M subscribers • 2.8K videos</p>
+      </div>
+      <div class="subscribe" id="subBtn" onclick="toggleSubscribe()">Subscribe</div>
+    </div>
+
+    <div class="tabs">
+      <span class="active">Home</span>
+      <span>Videos</span>
+      <span>Shorts</span>
+      <span>Playlists</span>
+      <span>Community</span>
+      <span>About</span>
+    </div>
+
+    <h5 class="mt-4">Latest Videos</h5>
+    <div class="video-grid">
+      <div class="video-card">
+        <iframe src="https://www.youtube.com/embed/um--b2LgWlU"></iframe>
+        <p>Java Full Stack Introduction</p>
+        <span class="like-btn" onclick="toggleLike(this)">❤️ 0</span>
+      </div>
+      <div class="video-card">
+        <iframe src="https://www.youtube.com/embed/um--b2LgWlU"></iframe>
+        <p>Python Full Course</p>
+        <span class="like-btn" onclick="toggleLike(this)">❤️ 0</span>
+      </div>
+      <div class="video-card">
+        <iframe src="https://www.youtube.com/embed/um--b2LgWlU"></iframe>
+        <p>ReactJS Crash Course</p>
+        <span class="like-btn" onclick="toggleLike(this)">❤️ 0</span>
+      </div>
+      <div class="video-card">
+        <iframe src="https://www.youtube.com/embed/um--b2LgWlU"></iframe>
+        <p>NodeJS Explained</p>
+        <span class="like-btn" onclick="toggleLike(this)">❤️ 0</span>
+      </div>
+    </div>
+    <!-- WATCH HISTORY -->
+<h5 class="mt-5">Watch History</h5>
+<div class="video-grid" id="historyGrid"></div>
+<iframe 
+  src="https://www.youtube.com/embed/um--b2LgWlU"
+  onclick="addToHistory('Java Full Stack Introduction','um--b2LgWlU')">
+</iframe>
+
+  </main>
+</div>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav">
+  <i class="bi bi-house"></i>
+  <i class="bi bi-play-btn"></i>
+  <i class="bi bi-plus-circle"></i>
+  <i class="bi bi-collection-play"></i>
+  <i class="bi bi-person"></i>
+</div>
+
+<script>
+/* SEARCH FILTER */
+const searchInput = document.getElementById("searchInput");
+const cards = document.querySelectorAll(".video-card");
+
+searchInput.addEventListener("input", e => {
+  const val = e.target.value.toLowerCase();
+  cards.forEach(card => {
+    card.style.display = card.innerText.toLowerCase().includes(val)
+      ? "block" : "none";
+  });
+});
+
+/* LIKE */
+function toggleLike(el){
+  let count = parseInt(el.innerText.replace("❤️","")) || 0;
+  el.classList.toggle("active");
+  el.innerText = `❤️ ${el.classList.contains("active") ? count+1 : count-1}`;
+}
+
+/* SUBSCRIBE */
+function toggleSubscribe(){
+  const btn = document.getElementById("subBtn");
+  btn.classList.toggle("active");
+  btn.innerText = btn.classList.contains("active") ? "Subscribed" : "Subscribe";
+}
+
+/* DARK MODE */
+function toggleTheme(){
+  document.body.classList.toggle("dark");
+  localStorage.setItem("theme",
+    document.body.classList.contains("dark") ? "dark" : "light"
+  );
+}
+if(localStorage.getItem("theme")==="dark"){
+  document.body.classList.add("dark");
+}
+/* ================= WATCH HISTORY ================= */
+
+const historyGrid = document.getElementById("historyGrid");
+
+/* ADD TO HISTORY */
+function addToHistory(title, videoId) {
+  let history = JSON.parse(localStorage.getItem("watchHistory")) || [];
+
+  // remove duplicate
+  history = history.filter(v => v.videoId !== videoId);
+
+  // add to top
+  history.unshift({ title, videoId });
+
+  // limit history (optional)
+  history = history.slice(0, 10);
+
+  localStorage.setItem("watchHistory", JSON.stringify(history));
+  renderHistory();
+}
+
+/* RENDER HISTORY */
+function renderHistory() {
+  const history = JSON.parse(localStorage.getItem("watchHistory")) || [];
+  historyGrid.innerHTML = "";
+
+  if (history.length === 0) {
+    historyGrid.innerHTML = "<p class='text-muted'>No videos watched yet</p>";
+    return;
+  }
+
+  history.forEach(v => {
+    historyGrid.innerHTML += `
+      <div class="video-card">
+        <iframe src="https://www.youtube.com/embed/${v.videoId}"></iframe>
+        <p>${v.title}</p>
+      </div>
+    `;
+  });
+}
+
+/* LOAD HISTORY ON PAGE LOAD */
+renderHistory();
+
+</script>
+
 </body>
 </html>
