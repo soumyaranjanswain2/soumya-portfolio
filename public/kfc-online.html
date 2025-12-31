@@ -1,175 +1,461 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KFC Online</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-    <script type="text/javascript">
-        function OrderClick(){
-            document.getElementById("lblCustomer").innerHTML = document.getElementById("txtCustomer").value;
-            document.getElementById("lblMobile").innerHTML = document.getElementById("txtMobile").value;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KFC Trending Cart & Payment</title>
 
-            var mealName = "";
-            var mealCost = 0;
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-            var optBurger = document.getElementById("optBurger");
-            var optRoller = document.getElementById("optRoller");
+<style>
+body {
+  background:#f4f6f8;
+  padding-bottom:80px;
+  font-family: system-ui;
+}
+.card {
+  border-radius:16px;
+  transition:.3s;
+}
+.card:hover { transform: translateY(-4px); }
+.qty-btn {
+  width:34px;
+  height:34px;
+  border-radius:50%;
+}
+.badge-cart {
+  font-size:14px;
+}
+/* ===== DARK THEME ===== */
+body.dark {
+  background: #0f172a;
+  color: #e5e7eb;
+}
 
-            var imgMeal = document.getElementById("imgMeal");
+body.dark .card {
+  background: #111827;
+  color: #e5e7eb;
+}
 
-            if(optBurger.checked) {
-                mealName = optBurger.value;
-                mealCost = 120;
-                imgMeal.src = "../public/images/omg1.png";
-            }
+body.dark .table {
+  color: #e5e7eb;
+}
 
-            if(optRoller.checked) {
-                mealName = optRoller.value;
-                mealCost = 80;
-                imgMeal.src = "..public/images/omg2.png";
-            }
+body.dark .form-control {
+  background: #1f2937;
+  color: #e5e7eb;
+  border-color: #374151;
+}
 
-            var adonName = "";
-            var adonCost = 0;
+body.dark .btn-light {
+  background: #1f2937;
+  color: #facc15;
+}
 
-            var optKrusher = document.getElementById("optKrusher");
-            var optWings = document.getElementById("optWings");
+body.dark .btn-outline-danger {
+  color: #fca5a5;
+  border-color: #fca5a5;
+}
 
-            if(optKrusher.checked){
-                adonName += optKrusher.value + "<br>";
-                adonCost = 40;
-                mealCost += adonCost;
-            }
+body.dark .btn-outline-danger:hover {
+  background: #7f1d1d;
+}
 
-            if(optWings.checked) {
-                adonName += optWings.value + "<br>";
-                adonCost = 90;
-                mealCost += adonCost;
-            }
+body {
+  transition: background 0.3s, color 0.3s;
+}
 
-            document.getElementById("lblMeal").innerHTML = mealName;
-            document.getElementById("lbladon").innerHTML = adonName;
-            document.getElementById("lblTotal").innerHTML = `&#8377; ${mealCost}`;
-
-        }
-    </script>
+</style>
 </head>
-<body class="container-fluid">
-    <header>
-        <img src="../public/images/kfctop.png" width="100%" height="150">
-    </header>
-    <section>
-        <div class="accordion" id="kfc">
-            <!-- Customer Category -->
-            <div class="accordion-item">
-                <div class="accordion-header">
-                    <button data-bs-target="#customer" data-bs-toggle="collapse" class="btn btn-danger w-100">Customer Details</button>
-                </div>
-                <div class="accordion-collapse collapse" id="customer" data-bs-parent="#kfc">
-                  <div class="accordion-body bg-danger text-white mt-2">
-                     <dl>
-                        <dt>Customer Name</dt>
-                        <dd><input type="text" id="txtCustomer" class="form-control"></dd>
-                        <dt>Phone Number</dt>
-                        <dd><input type="text" id="txtMobile" class="form-control"></dd>
-                     </dl>
-                  </div>
-                </div>
-            </div>
 
-            <!-- Meals Category -->
+<body class="container my-4">
 
-            <div class="accordion-item">
-                <div class="accordion-header">
-                    <button data-bs-target="#meal" data-bs-toggle="collapse" class="btn btn-danger w-100">Select Your Meal</button>
-                </div>
-                <div class="accordion-collapse collapse" id="meal" data-bs-parent="#kfc">
-                    <div class="accordion-body">
-                        <div class="row text-center">
-                            <div class="col">
-                                <img src="../public/images/omg1.png" width="50%" height="200">
-                                <div>
-                                    <div class="h3">OMG Burger  </div>
-                                    <input type="radio" id="optBurger" value="OMG Burger" name="meal" class="form-check-input"> <label class="form-check-label fw-bold"> &#8377; 120/-</label>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <img src="../public/images/omg2.png" width="50%" height="200">
-                                <div>
-                                    <div class="h3">OMG Roller  </div>
-                                    <input type="radio" id="optRoller" value="OMG Roller" name="meal" class="form-check-input"> <label class="form-check-label fw-bold"> &#8377; 80/-</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<!-- HEADER -->
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h3 class="text-danger">🍗 KFC Online Order</h3>
+  <span class="badge bg-danger badge-cart">
+    🛒 Items: <span id="cartCount">0</span>
+  </span>
+  <button class="btn btn-light border" id="themeToggle" onclick="toggleTheme()">
+  🌙
+</button>
 
-            <!-- AD-On's Category -->
+</div>
 
-            <div class="accordion-item">
-                <div class="accordion-header">
-                    <button data-bs-target="#adon" data-bs-toggle="collapse" class="btn btn-danger w-100">Select ADD-On's</button>
-                </div>
-                <div class="accordion-collapse collapse" id="adon" data-bs-parent="#kfc">
-                    <div class="accordion-body">
-                        <div class="row text-center">
-                            <div class="col">
-                                <img src="../public/images/krusher.png" width="50%" height="200">
-                                <div>
-                                    <div class="h3">Krusher Brownie  </div>
-                                    <input type="checkbox" id="optKrusher" value="Krusher Brownie"  class="form-check-input"> <label class="form-check-label fw-bold"> &#8377; 40/-</label>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <img src="../public/images/hot wings.jpeg" width="50%" height="200">
-                                <div>
-                                    <div class="h3">Hot Wings  </div>
-                                    <input type="checkbox" id="optWings" value="Hot Wings" class="form-check-input"> <label class="form-check-label fw-bold"> &#8377; 90/-</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<!-- CUSTOMER DETAILS -->
+<div class="card p-3 mb-4">
+  <h5>Customer Details</h5>
+  <input id="custName" class="form-control mb-2" placeholder="Customer Name">
+  <input id="custMobile" class="form-control" placeholder="Mobile Number">
+</div>
+
+<!-- PRODUCTS -->
+<div class="row g-4">
+
+<!-- OMG BURGER -->
+<div class="col-md-6">
+<div class="card p-3 text-center">
+  <img src="../public/images/omg1.png" height="160">
+  <h5 class="mt-2">OMG Burger</h5>
+  <p class="fw-bold">₹120</p>
+  <div class="d-flex justify-content-center align-items-center gap-2">
+    <button class="btn btn-outline-danger qty-btn"
+      onclick="changeQty('OMG Burger',120,-1)">−</button>
+    <span id="qty-OMG Burger">0</span>
+    <button class="btn btn-outline-danger qty-btn"
+      onclick="changeQty('OMG Burger',120,1)">+</button>
+  </div>
+</div>
+</div>
+
+<!-- OMG ROLLER -->
+<div class="col-md-6">
+<div class="card p-3 text-center">
+  <img src="../public/images/omg2.png" height="160">
+  <h5 class="mt-2">OMG Roller</h5>
+  <p class="fw-bold">₹80</p>
+  <div class="d-flex justify-content-center align-items-center gap-2">
+    <button class="btn btn-outline-danger qty-btn"
+      onclick="changeQty('OMG Roller',80,-1)">−</button>
+    <span id="qty-OMG Roller">0</span>
+    <button class="btn btn-outline-danger qty-btn"
+      onclick="changeQty('OMG Roller',80,1)">+</button>
+  </div>
+</div>
+</div>
+
+</div>
+
+<!-- ADDONS -->
+<div class="card p-3 mt-4">
+<h5>Add-Ons</h5>
+<div class="form-check">
+  <input class="form-check-input" type="checkbox"
+    onchange="toggleAddon('Krusher Brownie',40)">
+  <label class="form-check-label">Krusher Brownie ₹40</label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="checkbox"
+    onchange="toggleAddon('Hot Wings',90)">
+  <label class="form-check-label">Hot Wings ₹90</label>
+</div>
+</div>
+
+<!-- CART -->
+<div class="card p-3 mt-4">
+<h5>🛒 Cart Summary</h5>
+
+<table class="table">
+<thead>
+<tr>
+<th>Item</th>
+<th>Qty</th>
+<th>Price</th>
+<th></th>
+</tr>
+</thead>
+<tbody id="cartBody">
+<tr><td colspan="4" class="text-center">Cart is empty</td></tr>
+</tbody>
+</table>
+
+<input id="coupon" class="form-control mb-2" placeholder="Coupon Code (SAVE10)">
+<button class="btn btn-outline-success w-100 mb-2" onclick="applyCoupon()">
+Apply Coupon
+</button>
+<p class="text-success" id="discountMsg"></p>
+
+<h5 class="text-end">
+Total: ₹ <span id="total">0</span>
+</h5>
+
+<button class="btn btn-success w-100" onclick="proceedToPayment()">
+Proceed to Payment
+</button>
+
+</div>
+
+<!-- PAYMENT MODAL -->
+<div class="modal fade" id="paymentModal">
+<div class="modal-dialog modal-dialog-centered">
+<div class="modal-content rounded-4">
+
+<div class="modal-header">
+<h5>💳 Payment</h5>
+<button class="btn-close" data-bs-dismiss="modal"></button>
+</div>
+
+<div class="modal-body">
+
+<div class="alert alert-light text-center fw-bold">
+Pay ₹ <span id="payAmount">0</span>
+</div>
+
+<ul class="nav nav-pills mb-3 justify-content-center">
+<li class="nav-item">
+<button class="nav-link active" data-bs-toggle="pill" data-bs-target="#upi">
+UPI
+</button>
+</li>
+<li class="nav-item">
+<button class="nav-link" data-bs-toggle="pill" data-bs-target="#card">
+Card
+</button>
+</li>
+<li class="nav-item">
+<button class="nav-link" data-bs-toggle="pill" data-bs-target="#cod">
+COD
+</button>
+</li>
+</ul>
+
+<div class="tab-content">
+
+<div class="tab-pane fade show active" id="upi">
+<input class="form-control mb-2" placeholder="UPI ID">
+<button class="btn btn-success w-100" onclick="payNow()">Pay with UPI</button>
+</div>
+
+<div class="tab-pane fade" id="card">
+<input class="form-control mb-2" placeholder="Card Number">
+<div class="row g-2 mb-2">
+<div class="col"><input class="form-control" placeholder="MM/YY"></div>
+<div class="col"><input class="form-control" placeholder="CVV"></div>
+</div>
+<button class="btn btn-success w-100" onclick="payNow()">Pay with Card</button>
+</div>
+
+<div class="tab-pane fade" id="cod">
+<p class="text-muted text-center">Pay on delivery 🍗</p>
+<button class="btn btn-success w-100" onclick="payNow()">Confirm Order</button>
+</div>
+
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+<!-- SUCCESS MODAL -->
+<div class="modal fade" id="successModal">
+<div class="modal-dialog modal-dialog-centered">
+<div class="modal-content text-center p-4 rounded-4">
+<h3 class="text-success">✅ Order Successful</h3>
+<p>Your food is on the way 🍔🍗</p>
+<button class="btn btn-danger w-100" data-bs-dismiss="modal">Close</button>
+</div>
+</div>
+<!-- PAYMENT PAGE -->
+<div id="paymentPage" class="container my-4 d-none">
+
+  <!-- HEADER -->
+  <div class="d-flex align-items-center mb-3">
+    <button class="btn btn-light me-2" onclick="goBack()">←</button>
+    <h4 class="mb-0 fw-bold">Payment</h4>
+  </div>
+
+  <!-- ORDER SUMMARY -->
+  <div class="card p-3 mb-3">
+    <h6 class="fw-bold">Order Summary</h6>
+    <div class="d-flex justify-content-between">
+      <span>Total Amount</span>
+      <strong>₹ <span id="payTotal">0</span></strong>
+    </div>
+    <p class="text-muted small mt-1">
+      Inclusive of all taxes
+    </p>
+  </div>
+
+  <!-- PAYMENT METHODS -->
+  <div class="card p-3 mb-3">
+    <h6 class="fw-bold mb-3">Choose Payment Method</h6>
+
+    <!-- UPI -->
+    <div class="border rounded p-3 mb-3">
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="payMethod" checked>
+        <label class="form-check-label fw-semibold">
+          UPI (Google Pay / PhonePe / Paytm)
+        </label>
+      </div>
+      <input class="form-control mt-2" placeholder="Enter UPI ID">
+    </div>
+
+    <!-- CARD -->
+    <div class="border rounded p-3 mb-3">
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="payMethod">
+        <label class="form-check-label fw-semibold">
+          Credit / Debit Card
+        </label>
+      </div>
+      <input class="form-control mt-2" placeholder="Card Number">
+      <div class="row g-2 mt-2">
+        <div class="col">
+          <input class="form-control" placeholder="MM / YY">
         </div>
-        <button onclick="OrderClick()" data-bs-target="#summary" data-bs-toggle="modal" class="btn btn-danger w-100">Place Order</button>
-        <div class="modal fade" id="summary">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h3>Your Bill Summary</h3>
-                        <button class="btn btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col">
-                                <dl>
-                                    <dt>Customer</dt>
-                                    <dd id="lblCustomer"></dd>
-                                    <dt>Mobile</dt>
-                                    <dd id="lblMobile"></dd>
-                                    <dt>Meal</dt>
-                                    <dd id="lblMeal"></dd>
-                                    <dt>AdOn</dt>
-                                    <dd id="lbladon"></dd>
-                                    <dt>Total</dt>
-                                    <dd id="lblTotal"></dd>
-                                </dl>
-                            </div>
-                            <div class="col">
-                                <img id="imgMeal" width="100%" height="200">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="col">
+          <input class="form-control" placeholder="CVV">
         </div>
-    </section>
-    <script src="../node_modules/jquery/dist/jquery.js"></script>
-    <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
+      </div>
+    </div>
+
+    <!-- COD -->
+    <div class="border rounded p-3">
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="payMethod">
+        <label class="form-check-label fw-semibold">
+          Cash on Delivery
+        </label>
+      </div>
+      <p class="text-muted small mt-1">
+        Pay when your order arrives 🍗
+      </p>
+    </div>
+  </div>
+
+  <!-- PAY BUTTON -->
+  <div class="card p-3">
+    <button class="btn btn-success w-100 fs-5" onclick="confirmPayment()">
+      Pay ₹ <span id="payBtnAmount">0</span>
+    </button>
+  </div>
+
+</div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+let cart = [];
+let addons = [];
+let discount = 0;
+
+function changeQty(name, price, delta) {
+  let item = cart.find(i => i.name === name);
+
+  if (!item && delta > 0) {
+    cart.push({ name, price, qty: 1 });
+  } else if (item) {
+    item.qty += delta;
+    if (item.qty <= 0) cart = cart.filter(i => i.name !== name);
+  }
+
+  document.getElementById(`qty-${name}`).innerText =
+    cart.find(i => i.name === name)?.qty || 0;
+
+  renderCart();
+}
+
+function toggleAddon(name, price) {
+  const i = addons.findIndex(a => a.name === name);
+  i > -1 ? addons.splice(i,1) : addons.push({ name, price });
+  renderCart();
+}
+
+function applyCoupon() {
+  discount = coupon.value.trim().toUpperCase() === "SAVE10" ? 0.1 : 0;
+  discountMsg.innerText = discount ? "10% discount applied 🎉" : "Invalid coupon";
+  renderCart();
+}
+
+function renderCart() {
+  let body = "";
+  let total = 0;
+
+  cart.forEach(i => {
+    total += i.qty * i.price;
+    body += `
+    <tr>
+      <td>${i.name}</td>
+      <td>${i.qty}</td>
+      <td>₹${i.qty * i.price}</td>
+      <td><button class="btn btn-sm btn-danger"
+        onclick="changeQty('${i.name}',${i.price},-${i.qty})">x</button></td>
+    </tr>`;
+  });
+
+  addons.forEach(a => {
+    total += a.price;
+    body += `
+    <tr>
+      <td>${a.name}</td>
+      <td>1</td>
+      <td>₹${a.price}</td>
+      <td></td>
+    </tr>`;
+  });
+
+  total -= total * discount;
+
+  cartBody.innerHTML = body || "<tr><td colspan='4'>Cart is empty</td></tr>";
+document.getElementById("total").innerText = total.toFixed(0);
+
+  cartCount.innerText = cart.reduce((s,i)=>s+i.qty,0);
+}
+
+function checkout() {
+  if (!custName.value || !custMobile.value) {
+    alert("Enter customer details");
+    return;
+  }
+  if (cart.length === 0) {
+    alert("Cart is empty");
+    return;
+  }
+  payAmount.innerText = totalEl.innerText;
+  new bootstrap.Modal(paymentModal).show();
+}
+
+function payNow() {
+  bootstrap.Modal.getInstance(paymentModal).hide();
+  new bootstrap.Modal(successModal).show();
+  cart = []; addons = []; discount = 0;
+  document.querySelectorAll("span[id^='qty-']").forEach(e=>e.innerText=0);
+  renderCart();
+}
+function proceedToPayment() {
+  // validation
+  if (!custName.value || !custMobile.value) {
+    alert("Enter customer details");
+    return;
+  }
+
+  if (cart.length === 0 && addons.length === 0) {
+    alert("Cart is empty");
+    return;
+  }
+
+  // set payable amount
+  document.getElementById("payAmount").innerText =
+    document.getElementById("total").innerText;
+
+  // open payment modal
+  new bootstrap.Modal(
+    document.getElementById("paymentModal")
+  ).show();
+}
+function toggleTheme() {
+  document.body.classList.toggle("dark");
+
+  const isDark = document.body.classList.contains("dark");
+  document.getElementById("themeToggle").innerText = isDark ? "☀️" : "🌙";
+
+  // Save theme
+  localStorage.setItem("theme", isDark ? "dark" : "light");
+}
+
+// Load saved theme
+window.onload = () => {
+  const savedTheme = localStorage.getItem("theme");
+  if (savedTheme === "dark") {
+    document.body.classList.add("dark");
+    document.getElementById("themeToggle").innerText = "☀️";
+  }
+};
+</script>
+
 </body>
 </html>
