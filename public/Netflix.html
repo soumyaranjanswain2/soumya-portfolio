@@ -108,7 +108,11 @@ header{
   border-radius:6px;
   transition:.3s;
 }
-.movie-card:hover img{transform:scale(1.12)}
+.movie-card:hover img,
+.movie-card:active img {
+  transform: scale(1.12);
+}
+
 
 .movie-overlay{
   position:absolute;
@@ -182,6 +186,120 @@ body.light{
 body.light .overlay{background:rgba(255,255,255,.9)}
 body.light h1,body.light h2{color:#111}
 body.light .language-select{background:#fff;color:#000}
+/* =========================
+   RESPONSIVE STYLES
+========================= */
+
+/* Tablets */
+@media (max-width: 1024px) {
+  header {
+    padding: 16px 24px;
+  }
+
+  .hero {
+    margin-top: 100px;
+    padding: 0 20px;
+  }
+
+  .hero h1 {
+    font-size: 2.4rem;
+  }
+
+  .hero h2 {
+    font-size: 1.2rem;
+  }
+
+  .movies {
+    padding: 30px 24px;
+  }
+
+  .movie-card {
+    min-width: 140px;
+  }
+}
+
+/* Mobiles */
+@media (max-width: 768px) {
+  /* HEADER */
+  header {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  #searchInput {
+    display: none; /* Netflix hides search on small screens */
+  }
+
+  .header-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  /* HERO */
+  .hero {
+    margin-top: 80px;
+  }
+
+  .hero h1 {
+    font-size: 1.9rem;
+    line-height: 1.3;
+  }
+
+  .hero h2 {
+    font-size: 1rem;
+  }
+
+  /* FORM */
+  .form-group {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .form-group input {
+    width: 100%;
+    max-width: 380px;
+  }
+
+  .form-group .btn {
+    width: 100%;
+    max-width: 380px;
+  }
+
+  /* MOVIES */
+  .movie-card {
+    min-width: 120px;
+  }
+
+  .movie-card img {
+    border-radius: 4px;
+  }
+
+  /* MODALS */
+  .modal-box {
+    width: 90%;
+    padding: 20px;
+  }
+}
+
+/* Small Mobiles */
+@media (max-width: 480px) {
+  .logo {
+    font-size: 28px;
+  }
+
+  .hero h1 {
+    font-size: 1.6rem;
+  }
+
+  .hero h2 {
+    font-size: 0.95rem;
+  }
+
+  .movie-card {
+    min-width: 100px;
+  }
+}
+
 </style>
 </head>
 
