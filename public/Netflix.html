@@ -1,119 +1,366 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Netflix</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-    <style>
-        body {
-            background-size: cover;
-        }
-        .shade {
-            width: 100vw;
-            height: 100vh;
-            background-color: rgba(0,0,0,0.5);
-            margin-top: -10px;
-            margin-left: -10px;
-        }
-        header {
-            padding: 40px;
-            color:white;
-            display: flex;
-            justify-content: space-between;
-        }
-        .brand-title {
-            font-size: 40px;
-            color:red;
-            font-weight: bold;
-            font-family: Arial;
-        }
-        .language {
-            padding: 5px;
-            background-color: rgba(0,0,0,0.4);
-            color:white;
-            margin-right: 20px;
-        }
-        .signin {
-            padding: 5px;
-            background-color: red;
-            color:white;
-            border-radius: 5px;
-        }
-        .site-title {
-            font-family: Arial;
-            font-size: 60px;
-            font-weight: bold;
-            width: 650px;
-            color:white;
-            margin-left: 40px;
-            margin-top: 50px;
-        }
-        .site-subtitle {
-            font-family: Arial;
-            font-size: 25px;
-            font-weight: bold;
-            margin-left: 40px;
-            margin-top: 20px;
-            color:white;
-        }
-        main {
-            margin-left: 40px;
-            color:white;
-            margin-top: 20px;
-        }
-        .register-text {
-            font-size: 18px;
-            font-family: Arial;
-        }
-        .register-form {
-            margin-top: 20px;
-        }
-        .email {
-            padding: 10px;
-            background-color: lightgray;
-            color:black;
-            width: 400px;
-            display: inline-block;
-        }
-        .button {
-            background-color: red;
-            padding: 10px;
-            color:white;
-            margin-left: 10px;
-            display: inline-block;
-            width: 100px;
-            font-size: 17px;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Netflix Clone</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
+
+/* BODY */
+body{
+  background:url("../public/images/netflix.banner.jpg") no-repeat center/cover;
+  min-height:100vh;
+  color:#fff;
+}
+
+/* OVERLAY */
+.overlay{
+  min-height:100vh;
+  background:
+    linear-gradient(to bottom,rgba(0,0,0,.7),rgba(0,0,0,.4)),
+    linear-gradient(to top,rgba(0,0,0,.9),rgba(0,0,0,0));
+}
+
+/* HEADER */
+header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:20px 48px;
+}
+
+.logo{
+  font-size:36px;
+  font-weight:bold;
+  color:#e50914;
+}
+
+.header-actions{
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+
+.language-select{
+  background:transparent;
+  color:white;
+  border:1px solid #aaa;
+  padding:6px 10px;
+}
+
+.btn{
+  background:#e50914;
+  color:white;
+  border:none;
+  padding:8px 16px;
+  border-radius:4px;
+  cursor:pointer;
+  font-weight:bold;
+}
+.btn:active{transform:scale(.96)}
+
+/* HERO */
+.hero{
+  max-width:800px;
+  margin:120px auto 60px;
+  text-align:center;
+}
+
+.hero h1{font-size:3rem}
+.hero h2{margin:15px 0;font-weight:400}
+
+/* FORM */
+.form-group{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+}
+.form-group input{
+  width:300px;
+  height:56px;
+  padding:14px;
+  border-radius:4px;
+  border:none;
+}
+.error{margin-top:10px;color:#ff4c4c}
+
+/* MOVIES */
+.movies{padding:40px 48px}
+.movies h3{margin:10px 0}
+.movie-row{
+  display:flex;
+  gap:12px;
+  overflow-x:auto;
+}
+.movie-row::-webkit-scrollbar{display:none}
+
+.movie-card{
+  min-width:160px;
+  position:relative;
+  cursor:pointer;
+}
+.movie-card img{
+  width:100%;
+  border-radius:6px;
+  transition:.3s;
+}
+.movie-card:hover img{transform:scale(1.12)}
+
+.movie-overlay{
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  opacity:0;
+  transition:.3s;
+  border-radius:6px;
+}
+.movie-card:hover .movie-overlay{opacity:1}
+.movie-overlay i{font-size:36px}
+
+.rating{
+  position:absolute;
+  top:6px;
+  left:6px;
+  background:#e50914;
+  padding:2px 6px;
+  font-size:12px;
+  border-radius:4px;
+}
+
+/* SKELETON */
+.skeleton{
+  width:160px;
+  height:240px;
+  background:#222;
+  border-radius:6px;
+  animation:pulse 1.5s infinite;
+}
+@keyframes pulse{
+  0%{opacity:.4}
+  50%{opacity:1}
+  100%{opacity:.4}
+}
+
+/* MODALS */
+.modal-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.7);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:999;
+}
+.modal-box{
+  background:#000;
+  padding:30px;
+  width:320px;
+  border-radius:6px;
+}
+.close{float:right;cursor:pointer}
+
+/* PROFILE */
+.avatar{
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  cursor:pointer;
+}
+
+/* LIGHT MODE */
+body.light{
+  background:#f5f5f5;
+  color:#111;
+}
+body.light .overlay{background:rgba(255,255,255,.9)}
+body.light h1,body.light h2{color:#111}
+body.light .language-select{background:#fff;color:#000}
+</style>
 </head>
-<body background="../public/images/netflix.banner.jpg">
-  <div class="shade">
-     <header>
-         <div>
-            <span class="brand-title">NETFLIX</span>
-         </div>
-         <div>
-            <span class="language"> <span class="bi bi-globe"></span> <span>English</span> <span class="bi bi-chevron-down"></span> </span>
-            <span class="signin">Signin</span>
-         </div>
-     </header>
-     <section>
-        <div class="site-title">Unlimited movies, TV shows and more</div>
-        <div class="site-subtitle">Watch anywhere. Cancel anytime.</div>
-        <main>
-            <div class="register-text">Ready to watch? Enter your email to create or restart your membership.</div>
-            <div class="register-form">
-                <span class="email">Your email address</span>
-                <span class="button">
-                    Get Started <span class="bi bi-chevron-right"></span>
-                </span>
-            </div>
-        </main>
-     </section>
+
+<body>
+
+<div class="overlay">
+
+<header>
+  <div class="logo">NETFLIX</div>
+  <div class="header-actions" id="headerActions">
+    <input id="searchInput" placeholder="Search..." style="padding:6px;border-radius:4px;border:none">
+    <select class="language-select">
+      <option>English</option>
+      <option>हिन्दी</option>
+    </select>
+    <button class="btn" onclick="openModal()">Sign In</button>
+    <button class="btn" onclick="toggleTheme()">
+      <i id="themeIcon" class="bi bi-moon-fill"></i>
+    </button>
   </div>
+</header>
+
+<section class="hero">
+  <h1>Unlimited movies, TV shows and more</h1>
+  <h2>Watch anywhere. Cancel anytime.</h2>
+
+  <div class="form-group">
+    <input id="email" placeholder="Email address">
+    <button class="btn" onclick="handleSubmit()">Get Started</button>
+  </div>
+  <div id="error" class="error"></div>
+</section>
+
+<section class="movies">
+  <div style="display:flex;gap:10px">
+    <button class="btn" onclick="loadTrending()">Trending</button>
+    <button class="btn" onclick="loadTopRated()">Top Rated</button>
+  </div>
+
+  <h3>Movies</h3>
+  <div class="movie-row" id="movies"></div>
+
+  <h3>My List</h3>
+  <div class="movie-row" id="myList"></div>
+</section>
+
+</div>
+
+<!-- LOGIN MODAL -->
+<div id="loginModal" class="modal-overlay">
+  <div class="modal-box">
+    <span class="close" onclick="closeModal()">✕</span>
+    <h3>Sign In</h3>
+    <input id="loginEmail" placeholder="Email">
+    <input id="loginPassword" type="password" placeholder="Password">
+    <button class="btn" onclick="login()">Login</button>
+    <p id="loginError" class="error"></p>
+  </div>
+</div>
+
+<!-- DETAILS MODAL -->
+<div id="detailsModal" class="modal-overlay">
+  <div class="modal-box" style="width:420px">
+    <span class="close" onclick="closeDetails()">✕</span>
+    <img id="detailsImg" style="width:100%;border-radius:6px">
+    <h3 id="detailsTitle"></h3>
+    <p id="detailsOverview"></p>
+    <button class="btn" onclick="addToList()">➕ My List</button>
+  </div>
+</div>
+
+<script>
+/* THEME */
+function toggleTheme(){
+  document.body.classList.toggle("light");
+  themeIcon.className=document.body.classList.contains("light")
+    ?"bi bi-sun-fill":"bi bi-moon-fill";
+}
+
+/* EMAIL */
+function handleSubmit(){
+  if(!email.value.includes("@")){
+    error.textContent="Enter valid email";
+    return;
+  }
+  error.style.color="lightgreen";
+  error.textContent="Email submitted ✔";
+}
+
+/* LOGIN */
+function openModal(){loginModal.style.display="flex"}
+function closeModal(){loginModal.style.display="none"}
+function login(){
+  if(loginEmail.value==="test@netflix.com" && loginPassword.value==="123456"){
+    headerActions.innerHTML += `
+      <img src="https://i.pravatar.cc/40" class="avatar" onclick="logout()">
+    `;
+    closeModal();
+  }else{
+    loginError.textContent="Invalid credentials";
+  }
+}
+function logout(){
+  localStorage.clear();
+  location.reload();
+}
+
+/* TMDB */
+const API_KEY="YOUR_TMDB_API_KEY";
+const IMG="https://image.tmdb.org/t/p/w300";
+let selectedMovie=null;
+
+async function fetchMovies(url){
+  movies.innerHTML='<div class="skeleton"></div>'.repeat(6);
+  const res=await fetch(url);
+  const data=await res.json();
+  movies.innerHTML="";
+  data.results.forEach(m=>{
+    if(!m.poster_path)return;
+    movies.innerHTML+=`
+      <div class="movie-card">
+        <span class="rating">⭐ ${m.vote_average.toFixed(1)}</span>
+        <img src="${IMG+m.poster_path}">
+        <div class="movie-overlay" onclick='openDetails(${JSON.stringify(m)})'>
+          <i class="bi bi-play-circle-fill"></i>
+        </div>
+      </div>`;
+  });
+}
+
+function loadTrending(){
+  fetchMovies(`https://api.themoviedb.org/3/trending/movie/week?api_key=${API_KEY}`);
+}
+function loadTopRated(){
+  fetchMovies(`https://api.themoviedb.org/3/movie/top_rated?api_key=${API_KEY}`);
+}
+loadTrending();
+
+/* DETAILS */
+function openDetails(movie){
+  selectedMovie=movie;
+  detailsImg.src=IMG+movie.poster_path;
+  detailsTitle.textContent=movie.title;
+  detailsOverview.textContent=movie.overview;
+  detailsModal.style.display="flex";
+}
+function closeDetails(){detailsModal.style.display="none"}
+
+/* MY LIST */
+function addToList(){
+  let list=JSON.parse(localStorage.getItem("myList"))||[];
+  if(!list.find(m=>m.id===selectedMovie.id)){
+    list.push(selectedMovie);
+    localStorage.setItem("myList",JSON.stringify(list));
+    loadMyList();
+  }
+}
+function loadMyList(){
+  myList.innerHTML="";
+  (JSON.parse(localStorage.getItem("myList"))||[])
+    .forEach(m=>{
+      myList.innerHTML+=`
+        <div class="movie-card">
+          <img src="${IMG+m.poster_path}">
+        </div>`;
+    });
+}
+loadMyList();
+
+/* SEARCH */
+let timer;
+searchInput.addEventListener("input",e=>{
+  clearTimeout(timer);
+  timer=setTimeout(()=>{
+    if(e.target.value)
+      fetchMovies(`https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${e.target.value}`);
+  },500);
+});
+</script>
+
 </body>
 </html>
