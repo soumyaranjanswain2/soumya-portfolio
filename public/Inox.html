@@ -1,122 +1,317 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-    <script type="text/javascript">
-        function Getsummary(){
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>INOX | Movie Booking</title>
 
-            document.getElementById("summaryContainer").style.display = "block ";
-            document.getElementById("btnContainer").style.display = "none";
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-            
-            document.getElementById("lblMovie").innerText = document.getElementById("lstMovies").value;
-            document.getElementById("lblCinema").innerText = document.getElementById("lstCinema").value;
-            document.getElementById("lblDate").innerText = document.getElementById("lstDate").value;
-            document.getElementById("lblTime").innerText = document.getElementById("lstTime").value;
-            document.getElementById("lblSeats").innerText = document.getElementById("lstSeats").value;
+<style>
+body{background:#0b0f1a;color:#e5e7eb;font-family:system-ui}
+header{background:#000;padding:16px 28px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:26px;font-weight:800}
+.logo span{color:#e11d48}
 
-            movieName = document.getElementById("lstMovies").value;
-            imgPoster = document.getElementById("imgPoster");
+/* MOVIE GRID */
+.movie-card{background:#111827;border-radius:14px;overflow:hidden;cursor:pointer;transition:.3s}
+.movie-card:hover{transform:scale(1.05)}
+.movie-card img{width:100%;height:240px;object-fit:cover}
 
-            if(movieName=="Kushi"){
-                imgPoster.src = "../public/images/khusi.png";
-            } else {
-                imgPoster.src ="../public/images/jawan.png";
-            }
-        }
-    </script>
+/* SEARCH */
+.form-control,.form-select{background:#111827;color:#fff;border:1px solid #374151}
+.form-control::placeholder{color:#9ca3af}
+
+/* DETAILS */
+.banner{height:420px;background-size:cover;background-position:center;position:relative}
+.banner::after{content:"";position:absolute;inset:0;background:linear-gradient(to right,#000 35%,transparent)}
+.banner-content{position:absolute;bottom:40px;left:40px;z-index:1;max-width:520px}
+.banner h1{font-weight:800}
+
+/* SHOWTIME */
+.showtime{border:1px solid #22c55e;color:#22c55e;padding:6px 14px;border-radius:20px;cursor:pointer;margin-right:8px}
+.showtime.active{background:#22c55e;color:#000}
+
+/* SEATS */
+.seat{width:36px;height:36px;border-radius:6px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:12px}
+.silver{border:1px solid #38bdf8;color:#38bdf8}
+.gold{border:1px solid #facc15;color:#facc15}
+.seat.selected{background:#22c55e;color:#000}
+
+/* SUMMARY */
+.summary{background:#111827;border-radius:16px;padding:20px}
+.total{font-size:22px;font-weight:800;color:#22c55e}
+</style>
 </head>
-<body class="container-fluid">
-    <div id="btnContainer">
-        <button data-bs-target="#movies" data-bs-toggle="modal" class="btn btn-danger mt-2">Quick Booking</button>
+
+<body>
+
+<header>
+  <div class="logo">INOX<span>Cinemas</span></div>
+  <div>📍 Hyderabad</div>
+</header>
+
+<!-- ================= MOVIE LIST PAGE ================= -->
+<div class="container my-4" id="moviePage">
+
+  <!-- SEARCH + LANGUAGE (STRICTLY ADDED) -->
+  <div class="row mb-4 g-2">
+    <div class="col-md-6">
+      <input class="form-control" placeholder="Search movie..." oninput="searchMovie(this.value)">
     </div>
-    <div class="modal fade" id="movies">
-        <div class="modal-dialog modal-fullscreen">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3>Quick Booking</h3>
-                    <button class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <nav class="d-flex bg-dark text-white p-3 justify-content-between">
-                        <div>
-                            <select class="form-select" id="lstMovies">
-                                <option>Select Movies</option>
-                                <option>Kushi</option>
-                                <option>Jawan</option>
-                            </select>
-                        </div>
-                        <div>
-                            <select class="form-select" id="lstCinema">
-                                <option>Select Cinema </option>
-                                <option>INOX - B'hills</option>
-                                <option>INOX - KPHB</option>
-                                <option>INOX - Asoka One</option>
-                                <option>INOX - Sattva</option>
-                            </select>
-                        </div>
-                    <div>
-                        <select class="form-select" id="lstDate">
-                            <option>Select Date </option>
-                            <option>TODAY 10 SEP </option>
-                            <option>TOMORROW 11 SEP</option>
-                        </select>
-                    </div>
-                    <div>
-                        <select class="form-select" id="lstTime">
-                            <option>Select TIME </option>
-                            <option>10:30 AM</option>
-                            <option>01:30 PM</option>
-                            <option>04:30 PM</option>
-                            <option>08:00 PM</option>
-                        </select>
-                    </div>
-                    <div>
-                        <select class="form-select" id="lstSeats">
-                            <option>Select Seats</option>
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                        </select>
-                    </div>
-                    <div>
-                        <button onclick="Getsummary()" data-bs-dismiss="modal" class="btn btn-danger">BOOK</button>
-                     </div>
-                  </nav>
-                </div> 
-            </div>
-        </div>
+    <div class="col-md-4">
+      <select class="form-select" onchange="filterLanguage(this.value)">
+        <option value="">All Languages</option>
+        <option value="HI">Hindi</option>
+        <option value="TE">Telugu</option>
+        <option value="TA">Tamil</option>
+        <option value="EN">English</option>
+      </select>
     </div>
+  </div>
 
- 
-    <div id="summaryContainer" style="display:none">
-        <dl class="w-50">
-            <h4 class="bg-dark text-white p-2">Boojing Summary</h4>
-            <img width="100%" height="250" border="1" id="imgPoster">
-            <dt>Movies</dt>
-            <dd id="lblMovie"></dd>
-            <dt>Cinema</dt>
-            <dd id="lblCinema"></dd>
-            <dt>Date</dt>
-            <dd id="lblDate"></dd>
-            <dt>Time</dt> 
-            <dd id="lblTime"></dd>
-            <dt>Seats</dt>
-            <dd id="lblSeats"></dd>
-        </dl>
-        <button class="btn btn-link" data-bs-toggle="modal" data-bs-target="#movies">Modify Booking</button>
+  <h4 class="mb-4">Now Showing</h4>
+  <div class="row g-4" id="movieList"></div>
+</div>
 
+<!-- ================= MOVIE DETAILS PAGE ================= -->
+<div id="detailsPage" class="d-none">
+  <div class="banner" id="movieBanner">
+    <div class="banner-content">
+      <h1 id="detailTitle"></h1>
+      <p id="detailOverview"></p>
+      <button class="btn btn-success" onclick="openBooking()">Book Tickets</button>
+      <button class="btn btn-outline-light ms-2" onclick="goBack()">Back</button>
     </div>
+  </div>
 
+  <div class="container my-4">
+    <p>⭐ Rating: <span id="detailRating"></span></p>
+    <p>🕒 Runtime: <span id="detailRuntime"></span> mins</p>
+    <p>🎬 Genres: <span id="detailGenres"></span></p>
+  </div>
+</div>
 
-    <script src="../node_modules/jquery/dist/jquery.js"></script>
-    <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
-    
+<!-- ================= BOOKING PAGE ================= -->
+<div class="container my-5 d-none" id="bookingSection">
+<div class="row">
+
+<div class="col-md-8">
+  <h5 id="movieTitle"></h5>
+  <div class="my-3" id="showTimes"></div>
+  <div class="text-secondary mb-2">──── SCREEN THIS WAY ────</div>
+  <div id="seatLayout"></div>
+</div>
+
+<div class="col-md-4">
+  <div class="summary">
+    <p class="text-warning fw-bold d-none" id="timerBox">
+      ⏳ Seat Lock: <span id="timer">05:00</span>
+    </p>
+    <p>Movie: <span id="sMovie"></span></p>
+    <p>Time: <span id="sTime"></span></p>
+    <p>Seats: <span id="sSeats"></span></p>
+    <div class="total">₹ <span id="sTotal">0</span></div>
+    <button class="btn btn-success w-100 mt-3" onclick="openPayment()">Proceed to Payment</button>
+  </div>
+</div>
+
+</div>
+</div>
+
+<!-- ================= PAYMENT ================= -->
+<div class="modal fade" id="paymentModal">
+<div class="modal-dialog modal-dialog-centered">
+<div class="modal-content bg-dark text-white">
+<div class="modal-header">
+<h5>Payment</h5>
+<button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+</div>
+<div class="modal-body text-center">
+<p class="text-warning">⏳ Complete in <span id="paymentTimer">05:00</span></p>
+<h3>₹ <span id="payAmount"></span></h3>
+<button class="btn btn-success w-100 my-2" onclick="makePayment()">Pay Now</button>
+<button class="btn btn-outline-secondary w-100" onclick="cancelPayment()">Cancel</button>
+</div>
+</div>
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+/* ================= CONFIG ================= */
+const TMDB_API_KEY="aac2846a2844d003fef3743c5c2570f5";
+const IMG="https://image.tmdb.org/t/p/original";
+
+/* ================= STATE ================= */
+let allMovies=[],filteredMovies=[],currentMovie=null;
+let selectedSeats=[],seatPrice={},lockTimer=null,remaining=300;
+let paymentTimer=null,paymentSeconds=300;
+
+/* ================= LOAD MOVIES ================= */
+async function loadMovies(){
+  const r=await fetch(`https://api.themoviedb.org/3/movie/now_playing?api_key=${TMDB_API_KEY}&language=en-IN`);
+  const d=await r.json();
+
+  allMovies=d.results.map(m=>({
+    id:m.id,
+    title:m.title,
+    lang:m.original_language.toUpperCase(),
+    poster:`https://image.tmdb.org/t/p/w500${m.poster_path}`
+  }));
+
+  filteredMovies=[...allMovies];
+  renderMovies(filteredMovies);
+}
+
+function renderMovies(list){
+  movieList.innerHTML="";
+  list.forEach(m=>{
+    movieList.innerHTML+=`
+    <div class="col-6 col-md-3">
+      <div class="movie-card" onclick="openDetails(${m.id})">
+        <img src="${m.poster}">
+        <div class="p-2">${m.title}</div>
+      </div>
+    </div>`;
+  });
+}
+
+/* ================= SEARCH & FILTER ================= */
+function searchMovie(text){
+  filteredMovies=allMovies.filter(m=>m.title.toLowerCase().includes(text.toLowerCase()));
+  renderMovies(filteredMovies);
+}
+function filterLanguage(lang){
+  filteredMovies=lang?allMovies.filter(m=>m.lang===lang):allMovies;
+  renderMovies(filteredMovies);
+}
+
+/* ================= DETAILS ================= */
+async function openDetails(id){
+  const r=await fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${TMDB_API_KEY}&language=en-IN`);
+  currentMovie=await r.json();
+
+  moviePage.classList.add("d-none");
+  detailsPage.classList.remove("d-none");
+
+  movieBanner.style.backgroundImage=`url(${IMG}${currentMovie.backdrop_path})`;
+  detailTitle.innerText=currentMovie.title;
+  detailOverview.innerText=currentMovie.overview;
+  detailRating.innerText=currentMovie.vote_average;
+  detailRuntime.innerText=currentMovie.runtime;
+  detailGenres.innerText=currentMovie.genres.map(g=>g.name).join(", ");
+}
+
+function goBack(){
+  detailsPage.classList.add("d-none");
+  moviePage.classList.remove("d-none");
+}
+
+/* ================= BOOKING ================= */
+function openBooking(){
+  detailsPage.classList.add("d-none");
+  bookingSection.classList.remove("d-none");
+  movieTitle.innerText=currentMovie.title;
+  sMovie.innerText=currentMovie.title;
+  renderShowTimes();
+  renderSeats();
+}
+
+function renderShowTimes(){
+  showTimes.innerHTML="";
+  ["10:30 AM","02:00 PM","06:30 PM"].forEach(t=>{
+    showTimes.innerHTML+=`<span class="showtime" onclick="selectTime(this)">${t}</span>`;
+  });
+}
+function selectTime(el){
+  document.querySelectorAll(".showtime").forEach(s=>s.classList.remove("active"));
+  el.classList.add("active");
+  sTime.innerText=el.innerText;
+}
+
+/* ================= SEATS ================= */
+function renderSeats(){
+  seatLayout.innerHTML="";
+  [["A","Silver",150,4],["B","Silver",150,4],["C","Gold",220,6]].forEach(r=>{
+    seatLayout.innerHTML+=`<div>${r[0]} (${r[1]})</div>`;
+    const row=document.createElement("div");
+    row.className="d-flex gap-2 mb-2";
+    for(let i=1;i<=r[3];i++){
+      const id=r[0]+i;
+      seatPrice[id]=r[2];
+      row.innerHTML+=`<div class="seat ${r[1].toLowerCase()}" onclick="toggleSeat(this,'${id}')">${id}</div>`;
+    }
+    seatLayout.appendChild(row);
+  });
+}
+
+function toggleSeat(el,id){
+  el.classList.toggle("selected");
+  selectedSeats.includes(id)?selectedSeats=selectedSeats.filter(s=>s!==id):selectedSeats.push(id);
+  if(selectedSeats.length===1&&!lockTimer) startTimer();
+  extendTimer();
+  if(!selectedSeats.length) resetTimer();
+  updateSummary();
+}
+
+/* ================= TIMER ================= */
+function startTimer(){
+  timerBox.classList.remove("d-none");
+  remaining=300;
+  lockTimer=setInterval(()=>{
+    remaining--;
+    timer.innerText=`${String(Math.floor(remaining/60)).padStart(2,"0")}:${String(remaining%60).padStart(2,"0")}`;
+    if(remaining<=0){alert("Seat lock expired");resetTimer();}
+  },1000);
+}
+function extendTimer(){if(lockTimer){remaining=300;timer.innerText="05:00"}}
+function resetTimer(){
+  clearInterval(lockTimer);
+  lockTimer=null;
+  selectedSeats=[];
+  timerBox.classList.add("d-none");
+  document.querySelectorAll(".seat.selected").forEach(s=>s.classList.remove("selected"));
+  updateSummary();
+}
+
+/* ================= SUMMARY ================= */
+function updateSummary(){
+  sSeats.innerText=selectedSeats.join(", ");
+  sTotal.innerText=selectedSeats.reduce((t,s)=>t+seatPrice[s],0);
+}
+
+/* ================= PAYMENT ================= */
+function openPayment(){
+  if(!selectedSeats.length)return alert("Select seats");
+  payAmount.innerText=sTotal.innerText;
+  paymentSeconds=remaining;
+  bootstrap.Modal.getOrCreateInstance(paymentModal).show();
+  startPaymentTimer();
+}
+function startPaymentTimer(){
+  clearInterval(paymentTimer);
+  paymentTimer=setInterval(()=>{
+    paymentSeconds--;
+    paymentTimer.innerText=`${String(Math.floor(paymentSeconds/60)).padStart(2,"0")}:${String(paymentSeconds%60).padStart(2,"0")}`;
+    if(paymentSeconds<=0){alert("Payment timeout");cancelPayment();}
+  },1000);
+}
+function makePayment(){
+  clearInterval(paymentTimer);
+  bootstrap.Modal.getInstance(paymentModal).hide();
+  alert("✅ Booking Confirmed!");
+  resetTimer();
+}
+function cancelPayment(){
+  clearInterval(paymentTimer);
+  bootstrap.Modal.getInstance(paymentModal).hide();
+  resetTimer();
+}
+
+loadMovies();
+</script>
+
 </body>
 </html>
