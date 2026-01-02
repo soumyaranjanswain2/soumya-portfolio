@@ -1,186 +1,337 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tic-Tac-Toe Game</title>
-    <style>
-        *{
-    margin: 0;
-    padding: 0;
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Tic Tac Toe – Pro</title>
+
+<style>
+:root{
+  --bg1:#0f172a;
+  --bg2:#020617;
+  --glass:rgba(255,255,255,.12);
+  --text:#f8fafc;
+  --primary:#38bdf8;
+  --danger:#f87171;
+  --win:#22c55e;
 }
 
-body {
-    background-color: #548587;
-    text-align: center;
-}
-.container{
-    height: 70vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.game {
-    height: 60vmin;
-    width: 60vmin;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    gap: 1.5vmin;
-}
-.box {
-    height: 18vmin;
-    width: 18vmin;
-    border-radius: 1rem;
-    border: none;
-    box-shadow: 0 0 1rem rgba(0, 0, 0 ,0.3);
-    font-size: 8vmin;
-    color: #b0413e;
-    background-color: #ffffc7;
-}
-#reset-btn {
-    padding: 1rem;
-    font-size: 1.25rem;
-    background-color: #191913;
-    color: #fff;
-    border-radius: 1rem;
-    border: none;
-}
-#new-btn {
-    padding: 1rem;
-    font-size: 1.25rem;
-    background-color: #191913;
-    color: #fff;
-    border-radius: 1rem;
-    border: none;
+body.light{
+  --bg1:#f8fafc;
+  --bg2:#e5e7eb;
+  --glass:#ffffff;
+  --text:#020617;
 }
 
-#msg {
-    color: #ffffc7;
-    font-size: 8vmin;
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui}
+
+body{
+  min-height:100vh;
+  background:linear-gradient(135deg,var(--bg1),var(--bg2));
+  color:var(--text);
+  display:flex;
+  justify-content:center;
+  align-items:center;
 }
-.msg-container {
-    height: 100vmin;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    gap: 4rem;
+
+main{
+  width:100%;
+  max-width:380px;
+  padding:20px;
+  text-align:center;
 }
-.hide {
-    display: none;
+
+/* Header */
+h2{font-size:28px;font-weight:700}
+small{opacity:.7}
+
+/* Controls */
+.selectors{
+  display:flex;
+  gap:8px;
+  margin:10px 0;
 }
-    </style>
+
+select{
+  flex:1;
+  padding:8px;
+  border-radius:10px;
+  border:none;
+  font-weight:600;
+}
+
+/* Top bar */
+.top{
+  display:flex;
+  justify-content:space-between;
+  margin:10px 0;
+}
+
+/* Scoreboard */
+.scoreboard{
+  display:flex;
+  justify-content:space-between;
+  background:var(--glass);
+  padding:10px;
+  border-radius:12px;
+  font-size:14px;
+}
+
+/* Board */
+.game{
+  margin:16px auto;
+  padding:16px;
+  background:var(--glass);
+  backdrop-filter:blur(12px);
+  border-radius:20px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+  box-shadow:0 20px 40px rgba(0,0,0,.35);
+}
+
+.box{
+  height:90px;
+  border-radius:16px;
+  border:none;
+  font-size:42px;
+  font-weight:700;
+  background:rgba(255,255,255,.15);
+  cursor:pointer;
+  transition:.2s;
+}
+.box:hover:not(:disabled){background:rgba(255,255,255,.25)}
+.box:active{transform:scale(.92)}
+.box:disabled{opacity:.85}
+
+.box.win{
+  background:var(--win);
+  color:#fff;
+  box-shadow:0 0 18px rgba(34,197,94,.8);
+}
+
+/* Buttons */
+.controls{
+  display:flex;
+  gap:10px;
+}
+
+button{
+  flex:1;
+  padding:10px;
+  border:none;
+  border-radius:14px;
+  background:linear-gradient(135deg,var(--primary),#0ea5e9);
+  font-weight:600;
+  cursor:pointer;
+}
+
+/* Overlay */
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(2,6,23,.85);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+.card{
+  background:var(--glass);
+  backdrop-filter:blur(14px);
+  padding:28px;
+  border-radius:20px;
+}
+.hide{display:none}
+</style>
 </head>
+
 <body>
-    <div class="msg-container hide">
-        <p id="msg">Winner</p>
-        <button id="new-btn">New Game</button>
-    </div>
-    <main>
-        <h1>Tic Tac Toe </h1>
-        <div class="container">
-            <div class="game">
-                <button class="box"></button>
-                <button class="box"></button>
-                <button class="box"></button>
-                <button class="box"></button>
-                <button class="box"></button>
-                <button class="box"></button>
-                <button class="box"></button>
-                <button class="box"></button>
-                <button class="box"></button>
-    
-            </div>
-        </div>
-        <button id="reset-btn">Reset Game</button>
-    </main>
-    <script>
-        let boxes = document.querySelectorAll(".box");
-let resetBtn = document.querySelector("#reset-btn");
-let newGameBtn = document.querySelector("#new-btn");
-let msgContainer = document.querySelector(".msg-container");
-let msg = document.querySelector("#msg");
 
-let turnO = true; //playerX.playerO
+<div class="overlay hide" id="resultBox">
+  <div class="card">
+    <h2 id="resultText"></h2><br/>
+    <button onclick="resetGame()">New Game</button>
+  </div>
+</div>
 
-const winPatterns = [
-    [0,1,2],
-    [0,3,6],
-    [0,4,8],
-    [1,4,7],
-    [2,5,8],
-    [2,4,6],
-    [3,4,5],
-    [6,7,8],
-];
+<main>
+  <h2>Tic Tac Toe</h2>
+  <small>Professional Game</small>
 
- const resetGame = () => {
-    turnO = true;
-    enabledBoxes();
-    msgContainer.classList.add("hide");
+  <!-- Mode + Difficulty -->
+  <div class="selectors">
+    <select id="modeSelect">
+      <option value="ai">Vs Computer</option>
+      <option value="pvp">Player vs Player</option>
+    </select>
+    <select id="difficulty">
+      <option value="easy">Easy</option>
+      <option value="hard">Hard</option>
+      <option value="unbeatable">Unbeatable</option>
+    </select>
+  </div>
 
- }
+  <!-- Scoreboard -->
+  <div class="scoreboard">
+    <div>O: <span id="scoreO">0</span></div>
+    <div>Draw: <span id="scoreD">0</span></div>
+    <div>X: <span id="scoreX">0</span></div>
+  </div>
 
-boxes.forEach((box) => {
-    box.addEventListener("click", () =>{
-        if(turnO) {
-            box.innerText = "O";
-            turnO = false;
-        } else {
-            box.innerText = "X";
-            turnO = true;
-        }
-        box.disabled = true;
+  <div class="top">
+    <div id="turnText">Turn: O</div>
+    <div>⏱ <span id="time">10</span>s</div>
+  </div>
 
-        checkWinner();
+  <div class="game" id="board"></div>
+
+  <div class="controls">
+    <button onclick="resetGame()">Reset</button>
+    <button onclick="toggleTheme()">🌙</button>
+  </div>
+</main>
+
+<script>
+/* ===== CONSTANTS ===== */
+const WINS=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+
+/* ===== STATE ===== */
+let board=[],turn="O",ended=false;
+let scoreO=0,scoreX=0,scoreD=0;
+let timer,intv;
+
+/* ===== DOM ===== */
+const boardEl=document.getElementById("board");
+const turnText=document.getElementById("turnText");
+const timeEl=document.getElementById("time");
+const resultBox=document.getElementById("resultBox");
+const resultText=document.getElementById("resultText");
+const modeSelect=document.getElementById("modeSelect");
+const difficulty=document.getElementById("difficulty");
+
+/* ===== GAME LOGIC ===== */
+function check(board){
+  for(const [a,b,c] of WINS){
+    if(board[a]&&board[a]===board[b]&&board[b]===board[c]) return [a,b,c];
+  }
+  return board.includes("")?null:"draw";
+}
+
+function minimax(board,isMax){
+  const res=check(board);
+  if(res==="draw") return 0;
+  if(Array.isArray(res)) return isMax?-10:10;
+
+  let best=isMax?-Infinity:Infinity;
+  board.forEach((v,i)=>{
+    if(!v){
+      board[i]=isMax?"X":"O";
+      const score=minimax(board,!isMax);
+      board[i]="";
+      best=isMax?Math.max(best,score):Math.min(best,score);
+    }
+  });
+  return best;
+}
+
+/* ===== AI MOVE ===== */
+function aiMove(){
+  if(ended||modeSelect.value==="pvp") return;
+
+  let move;
+  const empty=board.map((v,i)=>v===""?i:null).filter(v=>v!==null);
+
+  if(difficulty.value==="easy"){
+    move=empty[Math.floor(Math.random()*empty.length)];
+  }
+  else if(difficulty.value==="hard"){
+    move=empty.find(i=>{
+      board[i]="X";
+      const win=check(board);
+      board[i]="";
+      return win;
+    }) ?? empty[Math.floor(Math.random()*empty.length)];
+  }
+  else{
+    let best=-Infinity;
+    empty.forEach(i=>{
+      board[i]="X";
+      const score=minimax(board,false);
+      board[i]="";
+      if(score>best){best=score;move=i;}
     });
-});
+  }
+  makeMove(move,"X");
+}
 
-const disabledBoxes = () => {
-    for(let box of boxes) {
-        box.disabled = true;
+/* ===== RENDER ===== */
+function render(win){
+  boardEl.innerHTML="";
+  board.forEach((v,i)=>{
+    const b=document.createElement("button");
+    b.className="box";
+    b.textContent=v;
+    if(win?.includes(i)) b.classList.add("win");
+    b.disabled=!!v||ended;
+    b.onclick=()=>playerMove(i);
+    boardEl.appendChild(b);
+  });
+}
+
+/* ===== MOVES ===== */
+function playerMove(i){
+  if(board[i]||ended) return;
+  makeMove(i,turn);
+  if(modeSelect.value==="ai"&&turn==="X") setTimeout(aiMove,300);
+}
+
+function makeMove(i,p){
+  board[i]=p;
+  const res=check(board);
+  if(res){
+    ended=true;
+    if(res==="draw"){scoreD++;resultText.textContent="🤝 Draw!"}
+    else{
+      p==="O"?scoreO++:scoreX++;
+      resultText.textContent=`🎉 ${p} Wins!`;
+      render(res);
     }
-};
+    updateScore();
+    resultBox.classList.remove("hide");
+  }else{
+    turn=p==="O"?"X":"O";
+    turnText.textContent=`Turn: ${turn}`;
+    render();
+  }
+}
 
-const enabledBoxes = () => {
-    for(let box of boxes) {
-        box.disabled = false;
-        box.innerText = "";
-    }
-};
+/* ===== UTIL ===== */
+function updateScore(){
+  scoreOEl.textContent=scoreO;
+  scoreXEl.textContent=scoreX;
+  scoreDEl.textContent=scoreD;
+}
 
+function resetGame(){
+  board=Array(9).fill("");
+  turn="O";
+  ended=false;
+  resultBox.classList.add("hide");
+  render();
+}
 
-const showWinner = (winner) => {
-    msg.innerText = `Congratulations , winner is ${winner}`;
-    msgContainer.classList.remove("hide");
-    disabledBoxes();
-};
+function toggleTheme(){
+  document.body.classList.toggle("light");
+}
 
+/* ===== INIT ===== */
+const scoreOEl=document.getElementById("scoreO");
+const scoreXEl=document.getElementById("scoreX");
+const scoreDEl=document.getElementById("scoreD");
 
+modeSelect.onchange=difficulty.onchange=()=>{scoreO=scoreX=scoreD=0;updateScore();resetGame()};
+resetGame();
+</script>
 
-
-const checkWinner = () => {
-    for(let pattern of winPatterns) {
-        let pos1Val = boxes[pattern[0]].innerText; 
-        let pos2Val = boxes[pattern[1]].innerText; 
-        let pos3Val = boxes[pattern[2]].innerText; 
-
-
-        if(pos1Val != "" && pos2Val != "" && pos3Val != "") {
-            if(pos1Val === pos2Val && pos2Val === pos3Val) { 
-                showWinner(pos1Val);
-            }
-        }
-     }
-};
-
-newGameBtn.addEventListener("click", resetGame);
-resetBtn.addEventListener("click", resetGame);
-
-
-
-    </script>
 </body>
 </html>
